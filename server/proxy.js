@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   const user = req.session.user || {} // 从session中取
   const needAccessToken = req.query.needAccessToken
 
-  if (needAccessToken && !user.accessToken) {
+  if (needAccessToken && !user.accessToken) { // 需要并且session中没有accessToken
     res.status(401).send({
       success: false,
       msg: 'need login'
@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
   const query = Object.assign({}, req.query, {
     accesstoken: (needAccessToken && req.method === 'GET') ? user.accessToken : ''
   })
-  if (query.needAccessToken) delete user.needAccessToken
+  if (query.needAccessToken) delete user.needAccessToken // 代理后不需要needAccessToken字段
 
   axios(`${BASE_URL}${path}`, {
     method: req.method,

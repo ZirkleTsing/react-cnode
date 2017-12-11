@@ -27,6 +27,7 @@ app.use(cookieSession({
 }))
 
 app.use('/api/user', require('./login'))
+app.use('/api', require('./proxy'))
 
 app.use(favicon(path.join(path.join(__dirname, '../favicon.ico'))))
 
@@ -42,6 +43,10 @@ if(!isDev) {
   serverDevRender(app)
 }
 
+app.use((error, req, res, next) => {
+  console.log(error)
+  res.status(500).send(error)
+})
 
 app.listen(3333, ()=> {
   console.log('server listening on 3333')
