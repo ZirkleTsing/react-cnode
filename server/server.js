@@ -15,11 +15,15 @@ const isDev = process.env.NODE_ENV === 'development'
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
+  // https://www.npmjs.com/package/body-parser
+  // The type option is used to determine what media type the middleware will parse.
   // type: 'application/x-www-form-urlencoded',
+  // The extended option allows to choose between parsing the URL-encoded data
+  // with the querystring library (when false) or the qs library (when true).
   extended: false
 }))
 app.use(cookieSession({
-  name: 'user-token',
+  name: 'user-accesstoken',
   secret: 'ZirkleTsing^&*(%$#Secret_key!##@!@!',
   maxAge: 10 * 60 * 1000,
   resave: false,
@@ -27,7 +31,7 @@ app.use(cookieSession({
 }))
 
 app.use('/api/user', require('./login'))
-app.use('/api', require('./proxy'))
+app.use('/api', require('./proxy')) // next 不执行 就截断了请求 不往下走
 
 app.use(favicon(path.join(path.join(__dirname, '../favicon.ico'))))
 

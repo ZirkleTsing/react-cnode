@@ -6,7 +6,6 @@ module.exports = (req, res, next) => {
   const path = req.path
   const user = req.session.user || {} // 从session中取
   const needAccessToken = req.query.needAccessToken
-
   if (needAccessToken && !user.accessToken) { // 需要并且session中没有accessToken
     res.status(401).send({
       success: false,
@@ -21,12 +20,19 @@ module.exports = (req, res, next) => {
   axios(`${BASE_URL}${path}`, {
     method: req.method,
     params: query,
+    // https://github.com/axios/axios
+    // By default, axios serializes JavaScript objects to JSON.
+    // To send data in the application/x-www-form-urlencoded format instead,
+    // you can use one of the following options.
+    // In a browser, you can use the URLSearchParams API or  using the qs library
+    // In node.js, you can use the querystring module, instead, you can also use the qs library.
     data: querystring.stringify(Object.assign({}, req.body, {
       accesstoken: (needAccessToken && req.method === 'POST') ? user.accessToken : ''
     })),
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
-    }
+    },
+    timeout: 1 * 10 * 1000
   })
     .then(resp => {
       if (resp.status === 200 && resp.data.success) {
