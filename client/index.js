@@ -8,6 +8,7 @@ import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import { green, red } from 'material-ui/colors'
 import App from './App'
 import { reducer } from './store/redux'
+import wrapComponent from './util/utils'
 
 const root = document.getElementById('root')
 // 通过服务端注入的全局变量得到初始 state
@@ -37,23 +38,6 @@ const render = (Component) => {
     </AppContainer>,
     root,
   )
-}
-
-const wrapComponent = (Component) => {
-  class WrapperApp extends React.Component {
-    // Remove the server-side injected CSS.
-    componentDidMount() {
-      const jssStyles = document.getElementById('jss-server-side');
-      if (jssStyles && jssStyles.parentNode) {
-        jssStyles.parentNode.removeChild(jssStyles);
-      }
-    }
-
-    render() {
-      return <Component />
-    }
-  }
-  return WrapperApp
 }
 
 render(wrapComponent(App))
