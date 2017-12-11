@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader' // eslint-disable-line
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
+import { green, red } from 'material-ui/colors'
 import App from './App'
 import { reducer } from './store/redux'
 
@@ -12,12 +14,24 @@ const root = document.getElementById('root')
 const preloadedState = window.__INITIAL_STATE__ // eslint-disable-line
 // 使用初始 state 创建 Redux store
 const store = createStore(reducer, preloadedState)
+
+// Create a theme instance.
+const theme = createMuiTheme({
+  palette: {
+    primary: green,
+    accent: red,
+    type: 'light',
+  },
+})
+
 const render = (Component) => {
   ReactDOM.hydrate(
     <AppContainer>
       <Provider store={store}>
         <BrowserRouter>
-          <Component />
+          <MuiThemeProvider theme={theme}>
+            <Component />
+          </MuiThemeProvider>
         </BrowserRouter>
       </Provider>
     </AppContainer>,
@@ -25,12 +39,29 @@ const render = (Component) => {
   )
 }
 
-render(App)
+const wrapComponent = (Component) => {
+  class WrapperApp extends React.Component {
+    // Remove the server-side injected CSS.
+    componentDidMount() {
+      const jssStyles = document.getElementById('jss-server-side');
+      if (jssStyles && jssStyles.parentNode) {
+        jssStyles.parentNode.removeChild(jssStyles);
+      }
+    }
+
+    render() {
+      return <Component />
+    }
+  }
+  return WrapperApp
+}
+
+render(wrapComponent(App))
 
 if (module.hot) {
   module.hot.accept('./App.js', () => {
     // console.log('hot loader refresh') // eslint-disable-line
     const NextApp = require('./App.js').default // eslint-disable-line
-    render(NextApp)
+    render(wrapComponent(NextApp))
   })
 }
