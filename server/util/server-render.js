@@ -20,10 +20,8 @@ function serverRender(bundle, template, req, res) {
   // Create a theme instance.
   const theme = createMuiTheme({
     palette: {
-      primary: color.green,
-      accent: color.red,
-      type: 'light',
-    }
+      primary: color.blue, // Purple and green play nicely together.
+    },
   })
   // Configure JSS
   const jss = create(preset())

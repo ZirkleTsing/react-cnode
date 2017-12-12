@@ -5,7 +5,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader' // eslint-disable-line
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import { green, red } from 'material-ui/colors'
+import { blue } from 'material-ui/colors'
 import App from './App'
 import { reducer } from './store/redux'
 import wrapComponent from './util/utils'
@@ -19,11 +19,9 @@ const store = createStore(reducer, preloadedState)
 // Create a theme instance.
 const theme = createMuiTheme({
   palette: {
-    primary: green,
-    accent: red,
-    type: 'light',
+    primary: blue, // Purple and green play nicely together.
   },
-})
+});
 
 const render = (Component) => {
   ReactDOM.hydrate(
