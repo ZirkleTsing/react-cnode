@@ -1,5 +1,5 @@
 const axios = require('axios')
-const MemoryFS = require("memory-fs")
+const MemoryFS = require('memory-fs')
 const path = require('path')
 const webpack = require('webpack')
 const proxy = require('http-proxy-middleware')
@@ -26,7 +26,7 @@ let ssrBundle = null
 
 serverComplier.outputFileSystem = mfs
 serverComplier.watch({}, (err, stats) => {
-  if(err) throw err
+  if (err) throw err
   stats = stats.toJson()
   stats.errors.forEach(err => console.error(err))
   stats.warnings.forEach(warn => console.warn(warn))
@@ -43,7 +43,6 @@ serverComplier.watch({}, (err, stats) => {
   ssrBundle = m.exports.ServerSideRender
 })
 
-
 module.exports = (app) => {
   app.use('/public', proxy({
     target: 'http://localhost:8888/'
@@ -54,7 +53,7 @@ module.exports = (app) => {
       return
     }
     getTemplate()
-      .then( template => {
+      .then(template => {
         serverRender(ssrBundle, template, req, res)
       })
   })

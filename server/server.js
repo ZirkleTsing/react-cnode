@@ -1,5 +1,4 @@
 const express = require('express')
-const ReactSSR = require('react-dom/server')
 const fs = require('fs')
 const path = require('path')
 const favicon = require('serve-favicon')
@@ -35,8 +34,8 @@ app.use('/api', require('./proxy')) // next 不执行 就截断了请求 不往�
 
 app.use(favicon(path.join(path.join(__dirname, '../favicon.ico'))))
 
-if(!isDev) {
-  app.use( '/public', express.static(path.join(__dirname, '../dist')))
+if (!isDev) {
+  app.use('/public', express.static(path.join(__dirname, '../dist')))
 
   app.get('*', (req, res) => {
     const serverEntry = require('../dist/server-entry').ServerSideRender
@@ -52,6 +51,6 @@ app.use((error, req, res, next) => {
   res.status(500).send(error)
 })
 
-app.listen(3333, ()=> {
+app.listen(3333, () => {
   console.log('server listening on 3333')
 })

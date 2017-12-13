@@ -25,7 +25,7 @@ router.post('/login', (req, res, next) => {
     })
     .catch(err => {
       //  response:{data: { success: false, error_msg: '错误的accessToken' }}}
-      if(err.response) {
+      if (err.response) {
         res.json({
           success: false,
           data: err.response.data

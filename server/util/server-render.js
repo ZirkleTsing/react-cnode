@@ -11,7 +11,7 @@ const color = require('material-ui/colors')
 const reducer = require('../../client/store/redux').reducer
 const add = require('../../client/store/redux').add
 
-function serverRender(bundle, template, req, res) {
+function serverRender (bundle, template, req, res) {
   const path = req.path
   const serverContext = {}
   const headTags = [] // usage: https://github.com/tizmagik/react-head
@@ -20,15 +20,15 @@ function serverRender(bundle, template, req, res) {
   // Create a theme instance.
   const theme = createMuiTheme({
     palette: {
-      primary: color.blue, // Purple and green play nicely together.
-    },
+      primary: color.blue // Purple and green play nicely together.
+    }
   })
   // Configure JSS
   const jss = create(preset())
   jss.options.createGenerateClassName = createGenerateClassName
   const store = createStore(reducer)
   // console.log('store:', store.getState())
-  const HtmlTemplate = template // template
+  // const HtmlTemplate = template // template
   store.dispatch(add())
   // console.log('after dispatch:', store.getState())
   const ssrApp = bundle(path, serverContext, store, headTags, sheetsRegistry, jss, theme)
@@ -43,7 +43,7 @@ function serverRender(bundle, template, req, res) {
     // })
     res.redirect(301, serverContext.url)
     res.end()
-    return
+    return null
   } else {
     // console.log(template)
     // <%- Outputs the unescaped value into the template

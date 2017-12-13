@@ -42,7 +42,7 @@ module.exports = (req, res, next) => {
       }
     })
     .catch(err => {
-      if(err.response) {
+      if (err.response) {
         res.status(500).send(err.response.data)
       } else {
         res.status(500).send({
