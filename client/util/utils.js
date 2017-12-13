@@ -1,20 +1,34 @@
 import React from 'react'
+import App from '../App'
 
-const wrapComponent = (Component) => {
-  class WrapperApp extends React.Component {
-    // Remove the server-side injected CSS.
-    componentDidMount() {
-      const jssStyles = document.getElementById('jss-server-side');
-      if (jssStyles && jssStyles.parentNode) {
-        jssStyles.parentNode.removeChild(jssStyles);
-      }
-    }
+// const wrapComponent = (Component) => {
+//   class WrapperApp extends React.Component {
+//     // Remove the server-side injected CSS.
+//     componentDidMount() {
+//       const jssStyles = document.getElementById('jss-server-side');
+//       if (jssStyles && jssStyles.parentNode) {
+//         jssStyles.parentNode.removeChild(jssStyles);
+//       }
+//     }
 
-    render() {
-      return <Component />
+//     render() {
+//       return <Component />
+//     }
+//   }
+//   return WrapperApp
+// }
+
+class WrapComponent extends React.Component {
+  componentDidMount() {
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
     }
   }
-  return WrapperApp
+
+  render() {
+    return <App />
+  }
 }
 
-export default wrapComponent
+export default WrapComponent

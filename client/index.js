@@ -7,8 +7,8 @@ import { AppContainer } from 'react-hot-loader' // eslint-disable-line
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import { blue } from 'material-ui/colors'
 import App from './App'
+// import MuiRequiredApp from './util/utils'
 import { reducer } from './store/redux'
-import wrapComponent from './util/utils'
 
 const root = document.getElementById('root')
 // 通过服务端注入的全局变量得到初始 state
@@ -38,12 +38,12 @@ const render = (Component) => {
   )
 }
 
-render(wrapComponent(App))
+render(App)
 
 if (module.hot) {
   module.hot.accept('./App.js', () => {
     // console.log('hot loader refresh') // eslint-disable-line
-    const NextApp = require('./App.js').default // eslint-disable-line
-    render(wrapComponent(NextApp))
+    const NextApp = require('./App').default // eslint-disable-line
+    render(NextApp)
   })
 }
