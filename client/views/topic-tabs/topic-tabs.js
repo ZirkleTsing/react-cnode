@@ -2,6 +2,7 @@ import React from 'react'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import PropTypes from 'prop-types'
+import TopicList from '../topic-list/index'
 
 const TabContainer = ({ children }) => (
   <Typography>
@@ -38,12 +39,12 @@ class TopicTabs extends React.Component {
           <Tab label="招聘" />
           <Tab label="客户端测试" />
         </Tabs>
-        { topicIndex === 0 && <TabContainer>全部</TabContainer> }
-        { topicIndex === 1 && <TabContainer>精华</TabContainer> }
-        { topicIndex === 2 && <TabContainer>分享</TabContainer> }
-        { topicIndex === 3 && <TabContainer>问答</TabContainer> }
-        { topicIndex === 4 && <TabContainer>招聘</TabContainer> }
-        { topicIndex === 5 && <TabContainer>客户端测试</TabContainer> }
+        { topicIndex === 0 && <TopicList /> }
+        { topicIndex === 1 && <TopicList /> }
+        { topicIndex === 2 && <TopicList /> }
+        { topicIndex === 3 && <TopicList /> }
+        { topicIndex === 4 && <TopicList /> }
+        { topicIndex === 5 && <TopicList /> }
       </div>
     )
   }

@@ -7,7 +7,10 @@ import TopicTabs from './views/topic-tabs/topic-tabs'
 
 export default class App extends Component {
   componentDidMount() {
-    // some
+    const jssStyles = document.getElementById('jss-server-side');
+    if (jssStyles && jssStyles.parentNode) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
   }
 
   render() {
