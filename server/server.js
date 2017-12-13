@@ -52,5 +52,5 @@ app.use((error, req, res, next) => {
 })
 
 app.listen(3333, () => {
-  console.log('test server listening on 3333')
+  console.log('server listening on 3333')
 })
