@@ -39,7 +39,7 @@ if(isDev) {
     host: '0.0.0.0',
     // compress: true,  // wtf
     port: '8888',
-    contentBase: path.join(__dirname, "../dist"),
+    contentBase: path.join(__dirname, '../dist'),
     publicPath: '/public/',
     overlay: {
       errors: true
