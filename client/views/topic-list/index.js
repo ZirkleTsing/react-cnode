@@ -9,6 +9,7 @@ class TopicList extends React.Component {
       title: '2017，我们来聊聊 Node.js',
       comment_count: '23',
       read_count: '215',
+      author: 'heisenberg',
     }
   }
 

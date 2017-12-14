@@ -20,6 +20,7 @@ const Primary = ({ topic, classes }) => (
 
 const Secondary = ({ topic, classes }) => (
   <span className={classes.secondaryWrapper}>
+    <span className={classes.author}>{ topic.author }</span>
     <span className={classes.comment}>{ topic.comment_count }</span>
     <span>/</span>
     <span className={classes.read}>{ topic.read_count }</span>

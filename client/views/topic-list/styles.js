@@ -12,6 +12,14 @@ const styles = (theme) => {
       padding: '0 6px',
       fontSize: '12px',
     },
+    author: {
+      marginRight: 5,
+      minWidth: 80,
+      maxWidth: 80,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
     comment: {
       marginRight: 5,
       color: theme.palette.primary[500],
