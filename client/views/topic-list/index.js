@@ -1,5 +1,5 @@
 import React from 'react'
-import List from 'material-ui/List'
+// import List from 'material-ui/List'
 import TopicListItem from './list-item'
 /* eslint-disable */
 class TopicList extends React.Component {
@@ -14,12 +14,12 @@ class TopicList extends React.Component {
 
   render() {
     return (
-      <List>
+      <div>
         <TopicListItem topic={this.state.topic} />
         <TopicListItem topic={this.state.topic} />
         <TopicListItem topic={this.state.topic} />
         <TopicListItem topic={this.state.topic} />
-      </List>
+      </div>
     )
   }
 }

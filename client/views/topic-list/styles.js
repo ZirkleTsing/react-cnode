@@ -19,9 +19,6 @@ const styles = (theme) => {
     read: {
       marginLeft: 5,
     },
-    read_count: {
-
-    },
     secondaryWrapper: {
       display: 'flex',
     },
