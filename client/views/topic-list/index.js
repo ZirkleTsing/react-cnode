@@ -8,7 +8,7 @@ class TopicList extends React.Component {
       tab: '置顶',
       title: '2017，我们来聊聊 Node.js',
       comment_count: '23',
-      read_count: '217',
+      read_count: '215',
     }
   }
 
