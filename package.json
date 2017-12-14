@@ -7,7 +7,7 @@
     "build:client": "webpack --config build/webpack.config.client.js",
     "build:server": "webpack --config build/webpack.config.server.js",
     "clear": "rimraf dist",
-    "clear:dp": "rimraf node_module",
+    "clear:dp": "rimraf node_modules",
     "build": "npm run clear && npm run build:client && npm run build:server",
     "start:server": "npm run build && nodemon server/server.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
