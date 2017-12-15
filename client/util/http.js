@@ -1,16 +1,23 @@
-import axios from 'axios'
+const axios = require('axios')
 
-const baseUrl = process.env.API_BASE || ''
+/**
+ * 如果是client端启动,就把 ''作为前缀，通过devServer代理,
+ * 如果是server端启动(3333端口),就把 http://127.0.0.1:3333
+ * (这个前缀后期可以和devServer一块改为另一个端口,后端无跨域问题)
+ */
+const baseUrl = process.env.API_BASE || '' // http://127.0.0.1:3333 || ''
+
 /**
  * url: 相对路径 例如: /api/topics
  * params: query字符串 例如: /api/topics?name='chang'&age=12
  */
 const parseUrl = (url, params) => {
+  params = params || {} // eslint-disable-line
   const str = Object.keys(params).reduce((result, key) => {
     result += `${key}=${params[key]}&`  // eslint-disable-line
     return result // name='chang'&property='shuaiB'&
   }, '')
-  return `${baseUrl}/${url}?${str.substr(0, str.length - 1)}`
+  return `${baseUrl}${url}?${str.substr(0, str.length - 1)}`
 }
 
 /**
@@ -22,7 +29,7 @@ const parseUrl = (url, params) => {
  * app.use('/api', require('./proxy')),
  * app.use('/api/user', require('./login'))
 */
-export const get = (url, params) => (
+const get = (url, params) => (
   new Promise((resolve, reject) => {
     axios.get(parseUrl(url, params))
       .then((resp) => {
@@ -41,7 +48,7 @@ export const get = (url, params) => (
  * params: query字符串 例如: /api/topics?name='chang'&age=12
  * postdata: post请求的body 例如: axios(path, obj)中的obj 参考 https://github.com/axios/axios
  */
-export const post = (url, params, postdata) => (
+const post = (url, params, postdata) => (
   new Promise((resolve, reject) => {
     axios.post(parseUrl(url, params, postdata))
       .then((resp) => {
@@ -54,4 +61,9 @@ export const post = (url, params, postdata) => (
       }).catch(reject)
   })
 )
+
+module.exports = {
+  get,
+  post,
+}
 

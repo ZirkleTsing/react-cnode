@@ -1,5 +1,6 @@
 import React from 'react'
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
+import { getTopicList } from '../../store/redux'
 // import AppBar from '../layout/app-bar'
 // import Container from '../layout/container'
 
@@ -23,10 +24,10 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard
+// export default Dashboard
 
-// export default connect(
-//   state => state,
-//   null,
-// )(Dashboard)
+export default connect(
+  state => state,
+  { getTopicList },
+)(Dashboard)
 /* eslint-enable */

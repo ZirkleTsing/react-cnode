@@ -56,7 +56,7 @@ if (isDev) {
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
-  config.plugins.push(new webpack.DefinePlugin({'process.env.API_BASE': '"http://127.0.0.1:3333"'}))
+  // config.plugins.push(new webpack.DefinePlugin({'process.env.API_BASE': '"http://127.0.0.1:3333"'}))
   // https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr
 }
 

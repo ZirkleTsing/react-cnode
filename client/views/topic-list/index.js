@@ -1,6 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
 // import List from 'material-ui/List'
 import TopicListItem from './list-item'
+import { getTopicList } from '../../store/redux'
 /* eslint-disable */
 class TopicList extends React.Component {
   state = {
@@ -11,6 +13,10 @@ class TopicList extends React.Component {
       read_count: '215',
       author: 'heisenberg',
     }
+  }
+
+  componentDidMount() {
+    this.props.getTopicList()
   }
 
   render() {
@@ -25,5 +31,8 @@ class TopicList extends React.Component {
   }
 }
 
-export default TopicList
+export default connect(
+  state => state,
+  { getTopicList }
+)(TopicList)
 /* eslint-enable */
