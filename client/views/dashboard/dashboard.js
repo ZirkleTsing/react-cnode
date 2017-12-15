@@ -8,6 +8,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     // some
     console.log(this.props)
+    console.log('haha')
   }
 
   render() {
