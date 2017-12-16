@@ -2,6 +2,8 @@ const ReactSSR = require('react-dom/server')
 const ejs = require('ejs')
 const serialize = require('serialize-javascript')
 const createStore = require('redux').createStore
+const applyMiddleware = require('redux').applyMiddleware
+const thunk = require('redux-thunk').default
 const SheetsRegistry = require('react-jss/lib/jss').SheetsRegistry
 const create = require('jss').create
 const preset = require('jss-preset-default').default
@@ -26,7 +28,7 @@ function serverRender (bundle, template, req, res) {
   // Configure JSS
   const jss = create(preset())
   jss.options.createGenerateClassName = createGenerateClassName
-  const store = createStore(reducer)
+  const store = createStore(reducer, applyMiddleware(thunk))
   // console.log('store:', store.getState())
   // const HtmlTemplate = template // template
   store.dispatch(add())

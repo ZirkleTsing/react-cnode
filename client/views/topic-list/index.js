@@ -15,6 +15,11 @@ class TopicList extends React.Component {
     }
   }
 
+  componentWillMount() {
+    console.log('生命周期')
+    this.props.getTopicList()
+  }
+
   componentDidMount() {
     this.props.getTopicList()
   }

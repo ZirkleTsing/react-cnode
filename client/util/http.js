@@ -31,6 +31,7 @@ const parseUrl = (url, params) => {
 */
 const get = (url, params) => (
   new Promise((resolve, reject) => {
+    console.log('请求') // eslint-disable-line
     axios.get(parseUrl(url, params))
       .then((resp) => {
         const { data } = resp

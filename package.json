@@ -9,7 +9,7 @@
     "clear": "rimraf dist",
     "clear:dp": "rimraf node_modules",
     "build": "npm run clear && npm run build:client && npm run build:server",
-    "start:server": "npm run build && nodemon server/server.js",
+    "start:server": "npm run build && node server/server.js",
     "dev:client": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.config.client.js",
     "dev:server": "nodemon server/server.js",
     "lint": "eslint --ext .js --ext .jsx client/",

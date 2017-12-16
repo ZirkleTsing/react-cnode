@@ -14,6 +14,9 @@ function reducer(state = initialState, action) {
     case ADD: {
       return { ...state, count: state.count + 1 }
     }
+    case GET_TOPIC_LIST: {
+      return { ...state, list: action.payload }
+    }
     default: {
       return state
     }
@@ -29,11 +32,10 @@ function topicList(list) { // eslint-disable-line
 }
 
 function getTopicList() {
-  return (dispatch) => { // eslint-disable-line
+  return (dispatch) => {
     get('/api/topics')
-      .then((data) => {
-        console.log(data)  // eslint-disable-line
-        // dispatch(topicList(data))
+      .then((resp) => {
+        dispatch(topicList(resp.data))
       })
   }
 }
