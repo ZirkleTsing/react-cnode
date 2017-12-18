@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader' // eslint-disable-line
@@ -15,7 +15,10 @@ const root = document.getElementById('root')
 // 通过服务端注入的全局变量得到初始 state
 const preloadedState = window.__INITIAL_STATE__ // eslint-disable-line
 // 使用初始 state 创建 Redux store
-const store = createStore(reducer, preloadedState, applyMiddleware(thunk))
+const store = createStore(reducer, preloadedState, compose(
+  applyMiddleware(thunk),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //eslint-disable-line
+))
 
 // Create a theme instance.
 const theme = createMuiTheme({

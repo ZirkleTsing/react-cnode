@@ -8,7 +8,7 @@ import {
   ListItemText,
 } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
-import HomeIcon from 'material-ui-icons/Home'
+// import HomeIcon from 'material-ui-icons/Avatar'
 import styles from './styles'
 
 const Primary = ({ topic, classes }) => (
@@ -20,10 +20,10 @@ const Primary = ({ topic, classes }) => (
 
 const Secondary = ({ topic, classes }) => (
   <span className={classes.secondaryWrapper}>
-    <span className={classes.author}>{ topic.author }</span>
-    <span className={classes.comment}>{ topic.comment_count }</span>
+    <span className={classes.author}>{ topic.author.loginname }</span>
+    <span className={classes.comment}>{ topic.reply_count }</span>
     <span>/</span>
-    <span className={classes.read}>{ topic.read_count }</span>
+    <span className={classes.read}>{ topic.visit_count }</span>
   </span>
 )
 
@@ -33,9 +33,7 @@ const StyledSecondary = withStyles(styles)(Secondary)
 const TopicListItem = ({ topic }) => (
   <ListItem button>
     <ListItemAvatar>
-      <Avatar>
-        <HomeIcon />
-      </Avatar>
+      <Avatar src={topic.author.avatar_url} alt="头像" />
     </ListItemAvatar>
     <ListItemText
       primary={<StyledPrimary topic={topic} />}
@@ -45,17 +43,17 @@ const TopicListItem = ({ topic }) => (
 )
 
 Primary.propTypes = {
-  topic: PropTypes.object.isRequired,
+  topic: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
 Secondary.propTypes = {
-  topic: PropTypes.object.isRequired,
+  topic: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
 }
 
 TopicListItem.propTypes = {
-  topic: PropTypes.object.isRequired,
+  topic: PropTypes.any.isRequired,
   // classes: PropTypes.object.isRequired,
 }
 

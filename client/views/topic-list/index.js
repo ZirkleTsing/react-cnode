@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-// import List from 'material-ui/List'
+import List from 'material-ui/List'
 import TopicListItem from './list-item'
 import { getTopicList } from '../../store/redux'
 /* eslint-disable */
@@ -25,12 +25,18 @@ class TopicList extends React.Component {
   }
 
   render() {
+    const topic = this.props.list
     return (
       <div>
-        <TopicListItem topic={this.state.topic} />
-        <TopicListItem topic={this.state.topic} />
-        <TopicListItem topic={this.state.topic} />
-        <TopicListItem topic={this.state.topic} />
+        <List>
+          {
+            topic.map((ele, index) => (
+              <TopicListItem
+                key={ele.create_at}
+                topic={ele} />
+            ))
+          }
+        </List>
       </div>
     )
   }
