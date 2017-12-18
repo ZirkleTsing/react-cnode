@@ -4,6 +4,8 @@ const axios = require('axios')
  * 如果是client端启动,就把 ''作为前缀，通过devServer代理,
  * 如果是server端启动(3333端口),就把 http://127.0.0.1:3333
  * (这个前缀后期可以和devServer一块改为另一个端口,后端无跨域问题)
+ * 例如:
+ * Error: connect ECONNREFUSED 127.0.0.1:3334 如果端口不对 前后端同构开发过后 后端请求时会报如下错误
  */
 const baseUrl = process.env.API_BASE || '' // http://127.0.0.1:3333 || ''
 

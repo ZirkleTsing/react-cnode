@@ -18,6 +18,14 @@ import App from '../App'
 //   return WrapperApp
 // }
 
+export const tabs = {
+  all: '全部',
+  good: '精华',
+  share: '分享',
+  ask: '问答',
+  job: '招聘',
+}
+
 class WrapComponent extends React.Component {
   componentDidMount() {
     const jssStyles = document.getElementById('jss-server-side');

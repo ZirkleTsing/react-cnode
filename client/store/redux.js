@@ -31,9 +31,12 @@ function topicList(list) { // eslint-disable-line
   return { type: GET_TOPIC_LIST, payload: list }
 }
 
-function getTopicList() {
+function getTopicList(tab) {
   return (dispatch) => {
-    get('/api/topics')
+    get('/api/topics', {
+      mdrender: false,
+      tab,
+    })
       .then((resp) => {
         dispatch(topicList(resp.data))
       })

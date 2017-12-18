@@ -1,5 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import queryString from 'query-string'
 import List from 'material-ui/List'
 import TopicListItem from './list-item'
 import { getTopicList } from '../../store/redux'
@@ -15,16 +18,26 @@ class TopicList extends React.Component {
     }
   }
 
-  componentWillMount() {
-    console.log('生命周期')
-    this.props.getTopicList()
+  componentWillReceiveProps(nextProps) {
+    const { search } = this.props.location
+    if (search !== nextProps.location.search) {
+      const query = queryString.parse(location.search) || {tab: 'all'}
+      this.props.getTopicList(query.tab ? query.tab : 'all')
+    }
   }
+  // componentWillMount() {
+  //   // console.log('生命周期')
+  //   this.props.getTopicList()
+  // }
 
   componentDidMount() {
-    this.props.getTopicList()
+    const { location } = this.props
+    const query = queryString.parse(location.search) || {tab: 'all'}
+    this.props.getTopicList(query.tab)
   }
 
   render() {
+    // console.log(this.props)
     const topic = this.props.list
     return (
       <div>
@@ -42,8 +55,14 @@ class TopicList extends React.Component {
   }
 }
 
-export default connect(
-  state => state,
-  { getTopicList }
-)(TopicList)
+TopicList.propTypes = {
+  location: PropTypes.object.isRequired,
+}
+
+export default withRouter(
+  connect(
+    state => state,
+    { getTopicList }
+  )(TopicList)
+)
 /* eslint-enable */

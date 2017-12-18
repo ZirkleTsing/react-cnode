@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import Dashboard from '../views/dashboard/dashboard'
-import User from '../views/user/user'
+// import Dashboard from '../views/dashboard/dashboard'
+// import User from '../views/user/user'
+import TopicTabs from '../views/topic-tabs/topic-tabs'
 
 export default class MyRoute extends React.Component {
   render() {
     return [
-      <Route path="/" exact render={() => <Redirect to="/fuck" />} key="root" />,
-      <Route path="/dashboard" exact component={Dashboard} key="dashboard" />,
-      <Route path="/user" exact component={User} key="user" />,
+      <Route path="/" exact render={() => <Redirect to="/dashboard" />} key="root" />,
+      <Route path="/dashboard" exact component={TopicTabs} key="dashboard" />,
     ]
   }
 }

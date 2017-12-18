@@ -3,6 +3,7 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import PropTypes from 'prop-types'
 import TopicList from '../topic-list/index'
+import { tabs } from '../../util/utils'
 
 const TabContainer = ({ children }) => (
   <Typography>
@@ -12,39 +13,37 @@ const TabContainer = ({ children }) => (
 
 class TopicTabs extends React.Component {
   state = {
-    topicIndex: 0,
+    tabIndex: 'all',
   }
 
   onTopicIndexChange = (event, value) => {
+    const { history } = this.props
+    console.log(value) // eslint-disable-line
+    history.push(`dashboard?tab=${value}`)
     this.setState({
-      topicIndex: value,
+      tabIndex: value,
     })
   }
 
   render() {
-    const { topicIndex } = this.state
+    console.log(`TopicTabs:`, this.props) // eslint-disable-line
+    console.log('state:', this.state.tabIndex) // eslint-disable-line
     return (
       <div>
         <Tabs
-          value={topicIndex}
+          value={this.state.tabIndex}
           onChange={this.onTopicIndexChange}
           fullWidth
           indicatorColor="primary"
           textColor="primary"
         >
-          <Tab label="全部" />
-          <Tab label="精华" />
-          <Tab label="分享" />
-          <Tab label="问答" />
-          <Tab label="招聘" />
-          <Tab label="客户端测试" />
+          {
+            Object.keys(tabs).map(key => (
+              <Tab key={key} label={tabs[key]} value={key} />
+            ))
+          }
         </Tabs>
-        { topicIndex === 0 && <TopicList /> }
-        { topicIndex === 1 && <TopicList /> }
-        { topicIndex === 2 && <TopicList /> }
-        { topicIndex === 3 && <TopicList /> }
-        { topicIndex === 4 && <TopicList /> }
-        { topicIndex === 5 && <TopicList /> }
+        <TopicList />
       </div>
     )
   }
@@ -56,6 +55,11 @@ TabContainer.propTypes = {
     PropTypes.element,
     PropTypes.string,
   ]).isRequired,
+}
+
+TopicTabs.propTypes = {
+  history: PropTypes.object.isRequired,
+  // location: PropTypes.object.isRequired,
 }
 
 export default TopicTabs
