@@ -10,10 +10,11 @@ import {
 import Avatar from 'material-ui/Avatar'
 // import HomeIcon from 'material-ui-icons/Avatar'
 import styles from './styles'
+import { tabs } from '../../util/utils'
 
 const Primary = ({ topic, classes }) => (
   <span className={classes.primaryWrapper}>
-    <span className={classes.tab}>{topic.tab}</span>
+    <span className={classes.tab}>{topic.top ? '置顶' : tabs[topic.tab]}</span>
     <span>{topic.title}</span>
   </span>
 )
