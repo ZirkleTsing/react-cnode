@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import classNames from 'classnames'
 import {
   ListItem,
   ListItemAvatar,
@@ -12,12 +13,18 @@ import Avatar from 'material-ui/Avatar'
 import styles from './styles'
 import { tabs } from '../../util/utils'
 
-const Primary = ({ topic, classes }) => (
-  <span className={classes.primaryWrapper}>
-    <span className={classes.tab}>{topic.top ? '置顶' : tabs[topic.tab]}</span>
-    <span>{topic.title}</span>
-  </span>
-)
+const Primary = ({ topic, classes }) => {
+  const cx = classNames({
+    [classes.tab]: true,
+    [classes.top]: topic.top,
+  })
+  return (
+    <span className={classes.primaryWrapper}>
+      <span className={cx}>{topic.top ? '置顶' : tabs[topic.tab]}</span>
+      <span>{topic.title}</span>
+    </span>
+  )
+}
 
 const Secondary = ({ topic, classes }) => (
   <span className={classes.secondaryWrapper}>

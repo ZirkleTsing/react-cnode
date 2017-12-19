@@ -12,6 +12,9 @@ const styles = (theme) => {
       padding: '0 6px',
       fontSize: '12px',
     },
+    top: {
+      backgroundColor: theme.palette.secondary[400],
+    },
     author: {
       marginRight: 5,
       minWidth: 80,
