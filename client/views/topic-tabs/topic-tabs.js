@@ -16,9 +16,14 @@ class TopicTabs extends React.Component {
     tabIndex: 'all',
   }
 
+  componentDidMount() {
+    const { history } = this.props
+    history.push('dashboard?tab=all')
+  }
+
   onTopicIndexChange = (event, value) => {
     const { history } = this.props
-    console.log(value) // eslint-disable-line
+    // console.log(value) // eslint-disable-line
     history.push(`dashboard?tab=${value}`)
     this.setState({
       tabIndex: value,

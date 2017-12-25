@@ -5,18 +5,18 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 import List from 'material-ui/List'
 import TopicListItem from './list-item'
-import { getTopicList } from '../../store/redux'
+import { getTopicList, getTopicDetail } from '../../store/redux'
 /* eslint-disable */
 class TopicList extends React.Component {
-  state = {
-    topic: {
-      tab: '置顶',
-      title: '2017，我们来聊聊 Node.js',
-      comment_count: '23',
-      read_count: '215',
-      author: 'heisenberg',
-    }
-  }
+  // state = {
+  //   topic: {
+  //     tab: '置顶',
+  //     title: '2017，我们来聊聊 Node.js',
+  //     comment_count: '23',
+  //     read_count: '215',
+  //     author: 'heisenberg',
+  //   }
+  // }
 
   componentWillReceiveProps(nextProps) {
     const { search } = this.props.location
@@ -36,9 +36,10 @@ class TopicList extends React.Component {
     this.props.getTopicList(query.tab)
   }
 
-  onClickListItem = (id) => () => {
+  onClickListItem = (ele) => () => {
     // 跳转至detail
-    this.props.history.push(`/detail/${id}`)
+    this.props.getTopicDetail(ele)
+    this.props.history.push(`/detail/${ele.id}`)
   }
 
   render() {
@@ -52,7 +53,7 @@ class TopicList extends React.Component {
               <TopicListItem
                 key={ele.create_at}
                 topic={ele}
-                onClickListItem={this.onClickListItem(ele.id)}
+                onClickListItem={this.onClickListItem(ele)}
               />
             ))
           }
@@ -65,12 +66,13 @@ class TopicList extends React.Component {
 TopicList.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  getTopicDetail: PropTypes.func.isRequired,
 }
 
 export default withRouter(
   connect(
     state => state,
-    { getTopicList }
+    { getTopicList, getTopicDetail }
   )(TopicList)
 )
 /* eslint-enable */

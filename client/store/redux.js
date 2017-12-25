@@ -3,10 +3,12 @@ const { get } = require('../util/http')
 
 const ADD = 'ADD'
 const GET_TOPIC_LIST = 'GET_TOPIC_LIST'
+const GET_TOPIC_DETAIL = 'GET_TOPIC_DETAIL'
 
 const initialState = {
   count: 1,
   list: [],
+  detail: {},
 }
 
 function reducer(state = initialState, action) {
@@ -16,6 +18,9 @@ function reducer(state = initialState, action) {
     }
     case GET_TOPIC_LIST: {
       return { ...state, list: action.payload }
+    }
+    case GET_TOPIC_DETAIL: {
+      return { ...state, detail: action.payload }
     }
     default: {
       return state
@@ -29,6 +34,10 @@ function add() {
 
 function topicList(list) { // eslint-disable-line
   return { type: GET_TOPIC_LIST, payload: list }
+}
+
+function getTopicDetail(detail) {
+  return { type: GET_TOPIC_DETAIL, payload: detail }
 }
 
 function getTopicList(tab) {
@@ -47,4 +56,5 @@ module.exports = {
   add,
   getTopicList,
   reducer,
+  getTopicDetail,
 }
