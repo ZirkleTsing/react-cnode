@@ -77,6 +77,64 @@ const styles = (theme) => {
         cursor: 'pointe',
       },
     },
+    replies: {
+      padding: 20,
+      '& .repliesbar': {
+        color: '#444',
+        fontSize: '14px',
+        wordBreak: 'break-word',
+        lineHeight: '20px',
+      },
+      '& li': {
+        borderTop: '1px solid #f0f0f0',
+      },
+      '& .markdown-text': {
+        '& h1, h2, h3': {
+          lineHeight: '40px',
+        },
+        '& h2': {
+          fontSize: '26px',
+          margin: '30px 0 15px',
+          borderBottom: '1px solid #eee',
+        },
+        '& p': {
+          margin: '1em 0',
+          fontSize: '15px',
+          lineHeight: '1.7em',
+          overflow: 'auto',
+          whiteSpace: 'pre-wrap',
+          wordWrap: 'break-word',
+        },
+        '& ul': {
+          display: 'block',
+          listStyleType: 'disc',
+          padding: 0,
+          margin: '0 0 10px 25px',
+        },
+        '& li': {
+          lineHeight: '2em',
+          fontSize: '14px',
+          display: 'list-item',
+          textAlign: '-webkit-match-parent',
+        },
+        '& img': {
+          maxWidth: '80%',
+          height: 'auto',
+          // position: 'absolute',
+          // left: '50%',
+          // transform: 'translateY(-50%)',
+        },
+        '& a': {
+          color: '#08c',
+          textDecoration: 'none',
+          cursor: 'pointe',
+        },
+      },
+    },
+    avatar: {
+      width: '60px',
+      height: '60px',
+    },
   }
 
   return style

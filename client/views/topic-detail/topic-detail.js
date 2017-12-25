@@ -6,9 +6,10 @@ import dateFormat from 'dateformat'
 import { withStyles } from 'material-ui/styles'
 import List, {
   ListItem,
-  // ListItemAvatar,
+  ListItemAvatar,
   ListItemText,
 } from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
 import { getTopicDetailAsync } from '../../store/redux'
 import styles from './styles'
 
@@ -41,14 +42,17 @@ class TopicDetail extends React.Component {
               detail.replies
                 ?
                   <div className={classes.replies}>
-                    <div className={classes.repliesBar}>{detail.replies.length}回复</div>
+                    <div className="repliesbar">{detail.replies.length} 回复</div>
                     <List>
                       {
                         detail.replies.map((reply) => (
-                          <ListItem button>
+                          <ListItem key={reply.create_at} button>
+                            <ListItemAvatar>
+                              <Avatar className={classes.avatar} src={reply.author.avatar_url} alt="头像" />
+                            </ListItemAvatar>
                             <ListItemText
-                              primary={<div><span>{reply.author.loginname}</span></div>}
-                              secondary={<div dangerouslySetInnerHTML={{__html: reply.content }}></div>}
+                              primary={<p style={{ margin: 7 }}><span>{reply.author.loginname}</span></p>}
+                              secondary={<span dangerouslySetInnerHTML={{__html: reply.content }}></span>}
                             />
                           </ListItem>
                         ))
