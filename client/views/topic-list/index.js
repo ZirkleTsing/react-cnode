@@ -36,6 +36,11 @@ class TopicList extends React.Component {
     this.props.getTopicList(query.tab)
   }
 
+  onClickListItem = (id) => () => {
+    // 跳转至detail
+    this.props.history.push(`/detail/${id}`)
+  }
+
   render() {
     // console.log(this.props)
     const topic = this.props.list
@@ -46,7 +51,9 @@ class TopicList extends React.Component {
             topic.map((ele, index) => (
               <TopicListItem
                 key={ele.create_at}
-                topic={ele} />
+                topic={ele}
+                onClickListItem={this.onClickListItem(ele.id)}
+              />
             ))
           }
         </List>
@@ -57,6 +64,7 @@ class TopicList extends React.Component {
 
 TopicList.propTypes = {
   location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 export default withRouter(

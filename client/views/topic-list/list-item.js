@@ -13,6 +13,7 @@ import Avatar from 'material-ui/Avatar'
 import styles from './styles'
 import { tabs } from '../../util/utils'
 
+/* eslint-disable */
 const Primary = ({ topic, classes }) => {
   const cx = classNames({
     [classes.tab]: true,
@@ -38,8 +39,8 @@ const Secondary = ({ topic, classes }) => (
 const StyledPrimary = withStyles(styles)(Primary)
 const StyledSecondary = withStyles(styles)(Secondary)
 
-const TopicListItem = ({ topic }) => (
-  <ListItem button>
+const TopicListItem = ({ topic, onClickListItem }) => (
+  <ListItem onClick={onClickListItem} button>
     <ListItemAvatar>
       <Avatar src={topic.author.avatar_url} alt="头像" />
     </ListItemAvatar>
@@ -62,8 +63,9 @@ Secondary.propTypes = {
 
 TopicListItem.propTypes = {
   topic: PropTypes.any.isRequired,
+  onClickListItem: PropTypes.func.isRequired,
   // classes: PropTypes.object.isRequired,
 }
 
 export default withStyles(styles)(TopicListItem)
-
+/* eslint-enable */
