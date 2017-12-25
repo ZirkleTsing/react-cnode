@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 import marked from 'marked'
 import dateFormat from 'dateformat'
 import { withStyles } from 'material-ui/styles'
+import List, {
+  ListItem,
+  // ListItemAvatar,
+  ListItemText,
+} from 'material-ui/List'
 import { getTopicDetailAsync } from '../../store/redux'
 import styles from './styles'
 
@@ -19,7 +24,7 @@ class TopicDetail extends React.Component {
     return (
       <div>
         {
-        this.props.detail.content
+        detail.content
         ?
           (
             <div>
@@ -32,6 +37,27 @@ class TopicDetail extends React.Component {
                 </div>
               </div>
               <div className={classes.content} dangerouslySetInnerHTML={{__html: marked(detail.content)}}></div>
+              {
+              detail.replies
+                ?
+                  <div className={classes.replies}>
+                    <div className={classes.repliesBar}>{detail.replies.length}回复</div>
+                    <List>
+                      {
+                        detail.replies.map((reply) => (
+                          <ListItem button>
+                            <ListItemText
+                              primary={<div><span>{reply.author.loginname}</span></div>}
+                              secondary={<div dangerouslySetInnerHTML={{__html: reply.content }}></div>}
+                            />
+                          </ListItem>
+                        ))
+                      }
+                    </List>
+                  </div>
+                :
+                  null
+              }
             </div>
           )
         :
