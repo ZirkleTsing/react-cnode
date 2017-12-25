@@ -30,7 +30,13 @@ class TopicDetail extends React.Component {
           (
             <div>
               <div className={classes.header}>
-                <div className={classes.title}><span className={classes.tab}>{detail.top ? '置顶' : null}</span>{detail.title}</div>
+                {
+                  detail.top
+                    ?
+                      <div className={classes.title}><span className={classes.tab}>置顶</span>{detail.title}</div>
+                    :
+                      <div className={classes.title}>{detail.title}</div>
+                }
                 <div className={classes.extra}>
                   <span className={classes.blank}>发布于{dateFormat(detail.create_at, "yyyy-mm-dd")}</span>
                   <span className={classes.blank}>作者 {detail.author.loginname}</span>
