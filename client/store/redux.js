@@ -51,10 +51,22 @@ function getTopicList(tab) {
       })
   }
 }
+// eslint-disabled
+function getTopicDetailAsync(id) {
+  return (dispatch) => {
+    get(`/api/topic/${id}`)
+      .then((resp) => {
+        console.log(resp.data) // eslint-disable-line
+        dispatch(getTopicDetail(resp.data))
+      })
+  }
+}
+// eslint-enable
 
 module.exports = {
   add,
   getTopicList,
   reducer,
   getTopicDetail,
+  getTopicDetailAsync,
 }

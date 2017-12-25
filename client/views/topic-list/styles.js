@@ -30,6 +30,9 @@ const styles = (theme) => {
     read: {
       marginLeft: 5,
     },
+    time: {
+      marginLeft: 10,
+    },
     secondaryWrapper: {
       display: 'flex',
     },

@@ -39,7 +39,7 @@ class TopicList extends React.Component {
   onClickListItem = (ele) => () => {
     // 跳转至detail
     this.props.getTopicDetail(ele)
-    this.props.history.push(`/detail/${ele.id}`)
+    this.props.history.push(`/topic/${ele.id}`)
   }
 
   render() {

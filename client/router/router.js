@@ -10,7 +10,7 @@ export default class MyRoute extends React.Component {
     return [
       <Route path="/" exact render={() => <Redirect to="/dashboard" />} key="root" />,
       <Route path="/dashboard" exact component={TopicTabs} key="dashboard" />,
-      <Route path="/detail/:id" exact component={TopicDetail} key="detail" />,
+      <Route path="/topic/:id" exact component={TopicDetail} key="detail" />,
     ]
   }
 }
