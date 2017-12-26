@@ -14,6 +14,7 @@ const TabContainer = ({ children }) => (
 class TopicTabs extends React.Component {
   state = {
     tabIndex: 'all',
+    // open: true,
   }
 
   componentDidMount() {
@@ -31,8 +32,8 @@ class TopicTabs extends React.Component {
   }
 
   render() {
-    console.log(`TopicTabs:`, this.props) // eslint-disable-line
-    console.log('state:', this.state.tabIndex) // eslint-disable-line
+    // console.log(`TopicTabs:`, this.props) // eslint-disable-line
+    // console.log('state:', this.state.tabIndex) // eslint-disable-line
     return (
       <div>
         <Tabs

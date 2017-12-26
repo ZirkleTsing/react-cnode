@@ -78,12 +78,19 @@ const styles = (theme) => {
       },
     },
     replies: {
-      padding: 20,
+      // padding: 20,
       '& .repliesbar': {
         color: '#444',
         fontSize: '14px',
         wordBreak: 'break-word',
         lineHeight: '20px',
+        padding: '10px 10px',
+        backgroundColor: '#f6f6f6',
+        borderRadius: '3px 3px 0 0',
+      },
+      '& .list': {
+        paddingTop: 0,
+        paddingBottom: 0,
       },
       '& li': {
         borderTop: '1px solid #f0f0f0',
@@ -116,6 +123,7 @@ const styles = (theme) => {
           fontSize: '14px',
           display: 'list-item',
           textAlign: '-webkit-match-parent',
+          borderTop: 'none',
         },
         '& img': {
           maxWidth: '80%',

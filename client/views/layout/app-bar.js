@@ -7,6 +7,13 @@ import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import HomeIcon from 'material-ui-icons/Home'
 import { withStyles } from 'material-ui/styles'
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog'
+import TextField from 'material-ui/TextField'
 
 const styles = {
   root: {
@@ -24,6 +31,17 @@ class MainAppBar extends React.Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   }
+
+  // constructor(props) {
+  //   super(props)
+  //   // this.closeModal = this.closeModal.bind(this)
+  // }
+
+  state = {
+    open: false,
+    token: '',
+  }
+
   /* eslint-disable */
   onHomeIconClick = () => {
   }
@@ -33,8 +51,24 @@ class MainAppBar extends React.Component {
   }
 
   loginButtonClick = () => {
-
+    this.setState({
+      open: true,
+    })
   }
+
+  closeModal = () => {
+    this.setState({
+      open: false
+    })
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    })
+    console.log(event.target.value)
+  }
+
   /* eslint-enable */
   render() {
     const { classes } = this.props
@@ -56,6 +90,36 @@ class MainAppBar extends React.Component {
             </Button>
           </Toolbar>
         </AppBar>
+        <Dialog
+          open={this.state.open}
+          onClose={this.closeModal}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">登录</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              user token
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="normal"
+              id="token"
+              label="输入用户token"
+              type="text"
+              fullWidth
+              value={this.state.token}
+              onChange={this.handleChange('token')}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.closeModal} color="primary">
+              取消
+            </Button>
+            <Button onClick={this.closeModal} color="primary">
+              登录
+            </Button>
+          </DialogActions>
+        </Dialog>
       </section>
     )
   }

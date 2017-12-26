@@ -49,7 +49,7 @@ class TopicDetail extends React.Component {
                 ?
                   <div className={classes.replies}>
                     <div className="repliesbar">{detail.replies.length} 回复</div>
-                    <List>
+                    <List className="list">
                       {
                         detail.replies.map((reply) => (
                           <ListItem key={reply.create_at} button>
@@ -57,7 +57,7 @@ class TopicDetail extends React.Component {
                               <Avatar className={classes.avatar} src={reply.author.avatar_url} alt="头像" />
                             </ListItemAvatar>
                             <ListItemText
-                              primary={<p style={{ margin: 7 }}><span>{reply.author.loginname}</span></p>}
+                              primary={<p style={{ marginBottom: 7, marginTop: 7 }}><span>{reply.author.loginname}</span></p>}
                               secondary={<span dangerouslySetInnerHTML={{__html: reply.content }}></span>}
                             />
                           </ListItem>
