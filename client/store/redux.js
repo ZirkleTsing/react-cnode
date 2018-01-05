@@ -5,6 +5,7 @@ const ADD = 'ADD'
 const LOGIN = 'LOGIN'
 const GET_TOPIC_LIST = 'GET_TOPIC_LIST'
 const GET_TOPIC_DETAIL = 'GET_TOPIC_DETAIL'
+const GET_USER_INFO = 'GET_USER_INFO'
 
 const initialState = {
   count: 1,
@@ -27,6 +28,9 @@ function reducer(state = initialState, action) {
     case GET_TOPIC_DETAIL: {
       return { ...state, detail: action.payload }
     }
+    case GET_USER_INFO: {
+      return { ...state, user: Object.assign({}, state.user, action.payload) }
+    }
     default: {
       return state
     }
@@ -37,8 +41,8 @@ function add() {
   return { type: ADD }
 }
 
-function login(userInfo) {
-  return { type: LOGIN, payload: userInfo }
+function login(loginInfo) {
+  return { type: LOGIN, payload: loginInfo }
 }
 
 function topicList(list) { // eslint-disable-line
@@ -49,13 +53,24 @@ function getTopicDetail(detail) {
   return { type: GET_TOPIC_DETAIL, payload: detail }
 }
 
+function userInfo(userinfo) {
+  return { type: GET_USER_INFO, payload: userinfo }
+}
+
 function postLogin(accesstoken) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     post('/api/user/login', {}, {
       accessToken: accesstoken,
     })
       .then((resp) => {
         dispatch(login(resp.data))
+      })
+      .then(() => {
+        const { loginname } = getState().user
+        get(`/api/user/${loginname}`)
+          .then((resp) => {
+            dispatch(userInfo(resp.data))
+          })
       })
   }
 }
@@ -81,6 +96,16 @@ function getTopicDetailAsync(id) {
       })
   }
 }
+
+function getUserInfo(loginname) {
+  return (dispatch) => {
+    get(`/api/user/${loginname}`)
+      .then((resp) => {
+        dispatch(userInfo(resp.data))
+      })
+  }
+}
+
 // eslint-enable
 
 module.exports = {
@@ -90,4 +115,5 @@ module.exports = {
   getTopicDetail,
   getTopicDetailAsync,
   postLogin,
+  getUserInfo,
 }
