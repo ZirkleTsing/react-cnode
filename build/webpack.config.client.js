@@ -28,7 +28,7 @@ const config = merge(baseConfig, {
 })
 
 if (isDev) {
-  console.log('====== develop mode ======')
+  console.log('====== developemt mode ======')
   config.entry = {
     app: [
       'react-hot-loader/patch',
@@ -58,6 +58,23 @@ if (isDev) {
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
   // config.plugins.push(new webpack.DefinePlugin({'process.env.API_BASE': '"http://127.0.0.1:3333"'}))
   // https://webpack.js.org/guides/hot-module-replacement/#enabling-hmr
+} else {
+  console.log('====== production mode ======')
+  config.entry = {
+    app: path.join(__dirname, '../client/index.js'),
+    vendor: [
+      'react',
+      'react-router-dom',
+      'react-dom',
+      'redux',
+      'react-redux',
+      'redux-thunk',
+      'axios',
+      'marked',
+      'dateformat'
+    ]
+  }
+  config.output.filename = '[name].[chunkhash].js'
 }
 
 module.exports = config
