@@ -53,7 +53,7 @@ const get = (url, params) => (
  */
 const post = (url, params, postdata) => (
   new Promise((resolve, reject) => {
-    axios.post(parseUrl(url, params, postdata))
+    axios.post(parseUrl(url, params), postdata)
       .then((resp) => {
         const { data } = resp
         if (data && data.success === true) {

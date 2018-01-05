@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
@@ -14,6 +15,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
+import { postLogin } from '../../store/redux'
 
 const styles = {
   root: {
@@ -25,6 +27,13 @@ const styles = {
   buttonMargin: {
     marginRight: 10,
   },
+  dialog: {
+    width: 400,
+    maxWidth: 800,
+  },
+  // textField: {
+  //   width: 400,
+  // },
 }
 
 class MainAppBar extends React.Component {
@@ -62,6 +71,13 @@ class MainAppBar extends React.Component {
     })
   }
 
+  register = () => {
+    this.props.postLogin(this.state.token)
+    this.setState({
+      open: false,
+    })
+  }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -85,15 +101,28 @@ class MainAppBar extends React.Component {
             <Button raised color="accent" onClick={this.createButtonClick} className={classes.buttonMargin}>
               新建话题
             </Button>
-            <Button raised color="accent" onClick={this.loginButtonClick}>
-              登录
-            </Button>
+            {
+                this.props.user && this.props.user.loginname ?
+                  (
+                    <span>
+                      {this.props.user.loginname}
+                    </span>
+                  )
+                :
+                  (
+                    <Button raised color="accent" onClick={this.loginButtonClick}>
+                      登录
+                    </Button>
+                  )
+              }
+
           </Toolbar>
         </AppBar>
         <Dialog
           open={this.state.open}
           onClose={this.closeModal}
           aria-labelledby="form-dialog-title"
+          classes={{ paperWidthSm: classes.dialog }}
         >
           <DialogTitle id="form-dialog-title">登录</DialogTitle>
           <DialogContent>
@@ -109,13 +138,14 @@ class MainAppBar extends React.Component {
               fullWidth
               value={this.state.token}
               onChange={this.handleChange('token')}
+              className={classes.textField}
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.closeModal} color="primary">
               取消
             </Button>
-            <Button onClick={this.closeModal} color="primary">
+            <Button onClick={this.register} color="primary">
               登录
             </Button>
           </DialogActions>
@@ -125,4 +155,15 @@ class MainAppBar extends React.Component {
   }
 }
 
-export default withStyles(styles)(MainAppBar)
+MainAppBar.propTypes = {
+  user: PropTypes.object.isRequired,
+}
+
+/* eslint-disable */
+export default withStyles(styles)(
+  connect(
+    state => state,
+    { postLogin },
+  )(MainAppBar),
+)
+/* eslint-enable */
