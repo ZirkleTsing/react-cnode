@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
+const NamedAllModulesPlugin = require('name-all-modules-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -22,7 +23,7 @@ const config = merge(baseConfig, {
     // https://github.com/jantimon/html-webpack-plugin/blob/master/docs/template-option.md 2) Setting a loader directly for the template
     new HtmlWebpackPlugin({
       template: '!!ejs-compiled-loader!' + path.join(__dirname, '../server.template.ejs'),
-      filename: 'index.server.html'
+      filename: 'index.server.ejs'
     })
   ]
 })
@@ -75,6 +76,29 @@ if (isDev) {
     ]
   }
   config.output.filename = '[name].[chunkhash].js'
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin(), // 压缩js代码
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity
+    }),
+    new webpack.NamedModulesPlugin(), // [0] => 具名chunk
+    new NamedAllModulesPlugin(), // patch for NamedModulesPlugin
+    new webpack.DefinePlugin({ // tell the react whether the env is production bundle or development bundle
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.NamedChunksPlugin((chunk) => { // avoid anonymous chunks
+      if (chunk.name) {
+        return chunk.name
+      }
+      return chunk.mapModules(m => path.relative(m.context, m.request)).join('_')
+    })
+  )
 }
 
 module.exports = config

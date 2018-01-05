@@ -41,6 +41,7 @@
     "http-proxy-middleware": "0.17.4",
     "husky": "0.14.3",
     "memory-fs": "0.4.1",
+    "name-all-modules-plugin": "^1.0.1",
     "react-hot-loader": "3.0.0",
     "rimraf": "2.6.2",
     "webpack": "3.8.1",
