@@ -14,6 +14,7 @@ import List, {
   ListItemText,
 } from 'material-ui/List'
 import { getUserInfo } from '../../store/redux'
+import dateFormat from '../../util/date'
 
 const styles = (theme) => {
   const style = {
@@ -57,7 +58,8 @@ const UserListItem = ({ reply }) => (
       <Avatar src={reply.author.avatar_url} alt="头像" />
     </ListItemAvatar>
     <ListItemText
-      primary={<div>{reply.title}</div>}
+      primary={<span>{reply.title}</span>}
+      secondary={<span>最后回复: { dateFormat(reply.last_reply_at) }</span>}
     />
   </ListItem>
 )

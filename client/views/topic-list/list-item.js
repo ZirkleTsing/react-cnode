@@ -10,7 +10,7 @@ import {
 } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 // import HomeIcon from 'material-ui-icons/Avatar'
-import dateFormat from 'dateformat'
+import dateFormat from '../../util/date'
 import styles from './styles'
 import { tabs } from '../../util/utils'
 
@@ -34,7 +34,7 @@ const Secondary = ({ topic, classes }) => (
     <span className={classes.comment}>{ topic.reply_count }</span>
     <span>/</span>
     <span className={classes.read}>{ topic.visit_count }</span>
-    <span className={classes.time}>{dateFormat(topic.create_at, 'yyyy-mm-dd')}</span>
+    <span className={classes.time}>{dateFormat(topic.create_at)}</span>
   </span>
 )
 
