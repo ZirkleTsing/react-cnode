@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
@@ -31,9 +32,13 @@ const styles = {
     width: 400,
     maxWidth: 800,
   },
-  // textField: {
-  //   width: 400,
-  // },
+  username: {
+    padding: '6px 4px',
+
+    '&:hover': {
+      cursor: 'pointer',
+    },
+  },
 }
 
 class MainAppBar extends React.Component {
@@ -49,6 +54,10 @@ class MainAppBar extends React.Component {
   state = {
     open: false,
     token: '',
+  }
+
+  onClickUserInfo = () => {
+    this.props.history.push('/user/info')
   }
 
   /* eslint-disable */
@@ -104,7 +113,10 @@ class MainAppBar extends React.Component {
             {
                 this.props.user && this.props.user.loginname ?
                   (
-                    <span>
+                    <span
+                      className={classes.username}
+                      onClick={this.onClickUserInfo}
+                    >
                       {this.props.user.loginname}
                     </span>
                   )
@@ -157,13 +169,14 @@ class MainAppBar extends React.Component {
 
 MainAppBar.propTypes = {
   user: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 /* eslint-disable */
-export default withStyles(styles)(
+export default withRouter(withStyles(styles)(
   connect(
     state => state,
     { postLogin },
   )(MainAppBar),
-)
+))
 /* eslint-enable */

@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom'
 // import User from '../views/user/user'
 import TopicTabs from '../views/topic-tabs/topic-tabs'
 import TopicDetail from '../views/topic-detail/topic-detail'
+import User from '../views/user/user'
 
 export default class MyRoute extends React.Component {
   render() {
@@ -11,6 +12,7 @@ export default class MyRoute extends React.Component {
       <Route path="/" exact render={() => <Redirect to="/dashboard" />} key="root" />,
       <Route path="/dashboard" exact component={TopicTabs} key="dashboard" />,
       <Route path="/topic/:id" exact component={TopicDetail} key="detail" />,
+      <Route path="/user/info" exact component={User} key="user" />,
     ]
   }
 }

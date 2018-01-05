@@ -1,7 +1,7 @@
 import React from 'react'
 import HeadTag from 'react-head'
 
-export default class User extends React.Component {
+class User extends React.Component {
   componentDidMount() {
     // some
   }
@@ -18,3 +18,5 @@ export default class User extends React.Component {
     )
   }
 }
+
+export default User
