@@ -56,8 +56,8 @@ const styles = (theme) => {
   return style
 }
 
-const UserListItem = ({ reply, classes }) => (
-  <ListItem button>
+const UserListItem = ({ reply, classes, onClickListItem }) => (
+  <ListItem onClick={onClickListItem(reply.id)} button>
     <ListItemAvatar>
       <Avatar src={reply.author.avatar_url} alt="头像" />
     </ListItemAvatar>
@@ -99,9 +99,15 @@ class User extends React.Component {
   }
   /* eslint-enable */
 
-  generateRecentRepliesList = (replies) => {
+  generateRecentRepliesList = (replies, onClickListItem) => {
     return replies.map((reply) => {
-      return <StyledUserListItem reply={reply} key={reply.id} />
+      return (
+        <StyledUserListItem
+          reply={reply}
+          key={reply.id}
+          onClickListItem={onClickListItem}
+        />
+      )
     })
   }
 
@@ -146,8 +152,17 @@ class User extends React.Component {
                   this.props.user &&
                   this.props.user.recent_topics &&
                   this.props.user.recent_topics.length ?
-                    <div>有</div> :
-                    <div className={classes.listEmpty}>您还没有浏览记录哟</div>
+                    (
+                      <List>
+                        {
+                          this.generateRecentRepliesList(
+                            this.props.user.recent_topics,
+                            this.onClickListItem,
+                          )
+                        }
+                      </List>
+                    ) :
+                      <div className={classes.listEmpty}>您还没有浏览记录哟</div>
                 }
               </Paper>
             </Grid>
@@ -163,7 +178,10 @@ class User extends React.Component {
                     (
                       <List>
                         {
-                          this.generateRecentRepliesList(this.props.user.recent_replies)
+                          this.generateRecentRepliesList(
+                            this.props.user.recent_replies,
+                            this.onClickListItem,
+                          )
                         }
                       </List>
                     )
@@ -184,9 +202,9 @@ class User extends React.Component {
                       <List>
                         {
                           this.generateRecentCollectionsList(
-                                                            this.props.collect,
-                                                            this.onClickListItem,
-                                                            )
+                            this.props.collect,
+                            this.onClickListItem,
+                            )
                         }
                       </List>
                     )
@@ -214,7 +232,7 @@ User.propTypes = {
 UserListItem.propTypes = {
   reply: PropTypes.any.isRequired,
   classes: PropTypes.object.isRequired,
-  // onClickListItem: PropTypes.func.isRequired,
+  onClickListItem: PropTypes.func.isRequired,
   // classes: PropTypes.object.isRequired,
 }
 
