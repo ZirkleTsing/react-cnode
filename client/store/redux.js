@@ -128,6 +128,19 @@ function postLogin(accesstoken) {
   }
 }
 
+function postComment(topicId, content) {
+  return () => {
+    post(`/api/topic/${topicId}/replies`, {
+      needAccessToken: true,
+    }, {
+      content,
+    })
+      .then(() => {
+        getTopicDetailAsync(topicId)
+      })
+  }
+}
+
 // eslint-enable
 
 module.exports = {
@@ -139,4 +152,5 @@ module.exports = {
   postLogin,
   getUserInfo,
   getUserCollection,
+  postComment,
 }

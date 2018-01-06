@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import SimpleMDE from 'react-simplemde-editor'
 import marked from 'marked'
 import dateFormat from 'dateformat'
 import { withStyles } from 'material-ui/styles'
@@ -9,18 +10,37 @@ import List, {
   ListItemAvatar,
   ListItemText,
 } from 'material-ui/List'
+import Button from 'material-ui/Button'
 import Avatar from 'material-ui/Avatar'
-import { getTopicDetailAsync } from '../../store/redux'
+import { getTopicDetailAsync, postComment } from '../../store/redux'
 import styles from './styles'
 
 /* eslint-disable */
 class TopicDetail extends React.Component {
+  state = {
+    textValue: ''
+  }
+
   componentDidMount() {
     this.props.getTopicDetailAsync(this.props.match.params.id)
   }
 
+  handleTextValueChange = (textValue) => {
+    console.log(textValue)
+    this.setState({
+      textValue
+    })
+  }
+
+  handleClickComment = () => {
+    if (!this.state.textValue.trim().length) {
+      console.log('空的评论非法')
+      return
+    }
+    this.props.postComment(this.props.detail.id, this.state.textValue)
+  }
+
   render() {
-    console.log('detail', this.props)
     const { detail, classes } = this.props
     return (
       <div>
@@ -28,8 +48,8 @@ class TopicDetail extends React.Component {
         detail.content
         ?
           (
-            <div>
-              <div className={classes.header}>
+            <section>
+              <section className={classes.header}>
                 {
                   detail.top
                     ?
@@ -42,12 +62,42 @@ class TopicDetail extends React.Component {
                   <span className={classes.blank}>作者 {detail.author.loginname}</span>
                   <span className={classes.blank}>{detail.visit_count}次浏览</span>
                 </div>
-              </div>
-              <div className={classes.content} dangerouslySetInnerHTML={{__html: marked(detail.content)}}></div>
+              </section>
+              <section className={classes.content} dangerouslySetInnerHTML={{__html: marked(detail.content)}}></section>
+              {
+                this.props.user && this.props.user.loginname ?
+                  (
+                    <section className={classes.editor}>
+                      <div className="repliesbar">添加回复</div>
+                      <SimpleMDE
+                        value={this.state.textValue}
+                        onChange={this.handleTextValueChange}
+                        options={{
+                          spellChecker: false,
+                        }}
+                      />
+                      <Button
+                        onClick={this.handleClickComment}
+                        className="commentButton"
+                        raised
+                        color="accent"
+                        disabled={!this.state.textValue.trim().length}
+                      >
+                          { this.state.textValue.trim().length ? '输入回复信息' : '点击回复'}
+                      </Button>
+                    </section>
+                  ) :
+                  (
+                    <section className={classes.needLogin}>
+                      <Button className="loginButton" raised color="accent">登录并回复</Button>
+                    </section>
+                  )
+              }
+
               {
               detail.replies
                 ?
-                  <div className={classes.replies}>
+                  <section className={classes.replies}>
                     <div className="repliesbar">{detail.replies.length} 回复</div>
                     <List className="list">
                       {
@@ -64,11 +114,11 @@ class TopicDetail extends React.Component {
                         ))
                       }
                     </List>
-                  </div>
+                  </section>
                 :
                   null
               }
-            </div>
+            </section>
           )
         :
           null
@@ -80,6 +130,8 @@ class TopicDetail extends React.Component {
 
 TopicDetail.propTypes = {
   match: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  postComment: PropTypes.func.isRequired,
   // getTopicDetail: PropTypes.func.isRequired,
 }
 
@@ -88,7 +140,7 @@ TopicDetail.propTypes = {
 export default withStyles(styles)(
   connect(
     state => state,
-    { getTopicDetailAsync }
+    { getTopicDetailAsync, postComment }
   )(TopicDetail)
 )
 /* eslint-enable */

@@ -143,6 +143,40 @@ const styles = (theme) => {
       width: '60px',
       height: '60px',
     },
+    editor: {
+      position: 'relative',
+      width: '100%',
+      borderBottom: '1px solid #e5e5e5',
+      '& .repliesbar': {
+        color: '#444',
+        fontSize: '14px',
+        wordBreak: 'break-word',
+        lineHeight: '20px',
+        padding: '10px 10px',
+        backgroundColor: '#f6f6f6',
+        borderRadius: '3px 3px 0 0',
+      },
+      '& .commentButton': {
+        position: 'absolute',
+        bottom: 45,
+        right: 15,
+        zIndex: 1,
+      },
+    },
+    needLogin: {
+      width: '100%',
+      display: 'flex',
+      justifyContent: 'center',
+      borderBottom: '1px solid #e5e5e5',
+      borderTop: '1px solid #e5e5e5',
+      backgroundColor: '#f6f6f6',
+      marginBottom: 20,
+
+      '& .loginButton': {
+        marginTop: 40,
+        marginBottom: 40,
+      },
+    },
   }
 
   return style
