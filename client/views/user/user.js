@@ -13,7 +13,7 @@ import List, {
   // ListItemIcon,
   ListItemText,
 } from 'material-ui/List'
-import { getUserInfo } from '../../store/redux'
+import { getUserInfo, getUserCollection } from '../../store/redux'
 import dateFormat from '../../util/date'
 
 const styles = (theme) => {
@@ -48,34 +48,72 @@ const styles = (theme) => {
       padding: '10px 0',
       color: 'rgba(0, 0, 0, .7)',
     },
+    itemTitle: {
+    },
+    listItemText: {
+    },
   }
   return style
 }
 
-const UserListItem = ({ reply }) => (
+const UserListItem = ({ reply, classes }) => (
   <ListItem button>
     <ListItemAvatar>
       <Avatar src={reply.author.avatar_url} alt="头像" />
     </ListItemAvatar>
     <ListItemText
-      primary={<span>{reply.title}</span>}
+      primary={<span className={classes.itemTitle} >{reply.title}</span>}
       secondary={<span>最后回复: { dateFormat(reply.last_reply_at) }</span>}
     />
   </ListItem>
 )
 
+const UserCollectionItem = ({ collect, classes, onClickListItem }) => (
+  <ListItem onClick={onClickListItem(collect.id)} button>
+    <ListItemAvatar>
+      <Avatar src={collect.author.avatar_url} alt="头像" />
+    </ListItemAvatar>
+    <ListItemText
+      primary={<span className={classes.itemTitle} >{collect.title}</span>}
+      secondary={
+        <span>最后回复: { collect.author.loginname } - { dateFormat(collect.last_reply_at) }</span>
+      }
+      classes={{ root: classes.listItemText, text: classes.listItemPrimary }}
+    />
+  </ListItem>
+)
+
+const StyledUserListItem = withStyles(styles)(UserListItem)
+const StyledUserCollectionItem = withStyles(styles)(UserCollectionItem)
+
 class User extends React.Component {
   componentDidMount() {
-    // some
     if (this.props.user && this.props.user.loginname) {
       this.props.getUserInfo(this.props.user.loginname)
+      this.props.getUserCollection(this.props.user.loginname)
     }
   }
-/* eslint-disable */
+  /* eslint-disable */
+  onClickListItem = (id) => () => {
+    this.props.history.push(`/topic/${id}`)
+  }
+  /* eslint-enable */
+
   generateRecentRepliesList = (replies) => {
-    return replies.map((reply) => (
-        <UserListItem reply={reply} key={reply.id} />
-    ))
+    return replies.map((reply) => {
+      return <StyledUserListItem reply={reply} key={reply.id} />
+    })
+  }
+
+  generateRecentCollectionsList = (collections, onClickListItem) => {
+    return collections.map((collect) => {
+      return (<StyledUserCollectionItem
+        collect={collect}
+        key={collect.id}
+        onClickListItem={onClickListItem}
+      />
+      )
+    })
   }
 
   render() {
@@ -105,7 +143,9 @@ class User extends React.Component {
                   最近浏览
                 </div>
                 {
-                  this.props.user && this.props.user.recent_topics && this.props.user.recent_topics.length?
+                  this.props.user &&
+                  this.props.user.recent_topics &&
+                  this.props.user.recent_topics.length ?
                     <div>有</div> :
                     <div className={classes.listEmpty}>您还没有浏览记录哟</div>
                 }
@@ -117,7 +157,9 @@ class User extends React.Component {
                   最近回复
                 </div>
                 {
-                  this.props.user && this.props.user.recent_replies && this.props.user.recent_replies.length ?
+                  this.props.user &&
+                  this.props.user.recent_replies &&
+                  this.props.user.recent_replies.length ?
                     (
                       <List>
                         {
@@ -135,6 +177,22 @@ class User extends React.Component {
                 <div className={classes.itemHeader}>
                   我的收藏
                 </div>
+                {
+                  this.props.collect &&
+                  this.props.collect.length ?
+                    (
+                      <List>
+                        {
+                          this.generateRecentCollectionsList(
+                                                            this.props.collect,
+                                                            this.onClickListItem,
+                                                            )
+                        }
+                      </List>
+                    )
+                    :
+                      <div className={classes.listEmpty}>您还没有任何回复历史哟</div>
+                }
               </Paper>
             </Grid>
           </Grid>
@@ -148,15 +206,25 @@ User.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   getUserInfo: PropTypes.func.isRequired,
+  getUserCollection: PropTypes.func.isRequired,
+  collect: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
 }
 
 UserListItem.propTypes = {
   reply: PropTypes.any.isRequired,
+  classes: PropTypes.object.isRequired,
   // onClickListItem: PropTypes.func.isRequired,
   // classes: PropTypes.object.isRequired,
 }
 
+UserCollectionItem.propTypes = {
+  collect: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  onClickListItem: PropTypes.func.isRequired,
+}
+
 export default withStyles(styles)(connect(
   state => state,
-  { getUserInfo },
+  { getUserInfo, getUserCollection },
 )(User))

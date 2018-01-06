@@ -6,12 +6,14 @@ const LOGIN = 'LOGIN'
 const GET_TOPIC_LIST = 'GET_TOPIC_LIST'
 const GET_TOPIC_DETAIL = 'GET_TOPIC_DETAIL'
 const GET_USER_INFO = 'GET_USER_INFO'
+const GET_USER_COLLECTION = 'GET_USER_COLLECTION'
 
 const initialState = {
   count: 1,
   list: [],
   detail: {},
   user: {},
+  collect: [],
 }
 
 function reducer(state = initialState, action) {
@@ -30,6 +32,9 @@ function reducer(state = initialState, action) {
     }
     case GET_USER_INFO: {
       return { ...state, user: Object.assign({}, state.user, action.payload) }
+    }
+    case GET_USER_COLLECTION: {
+      return { ...state, collect: action.payload }
     }
     default: {
       return state
@@ -57,22 +62,8 @@ function userInfo(userinfo) {
   return { type: GET_USER_INFO, payload: userinfo }
 }
 
-function postLogin(accesstoken) {
-  return (dispatch, getState) => {
-    post('/api/user/login', {}, {
-      accessToken: accesstoken,
-    })
-      .then((resp) => {
-        dispatch(login(resp.data))
-      })
-      .then(() => {
-        const { loginname } = getState().user
-        get(`/api/user/${loginname}`)
-          .then((resp) => {
-            dispatch(userInfo(resp.data))
-          })
-      })
-  }
+function userCollection(collect) {
+  return { type: GET_USER_COLLECTION, payload: collect }
 }
 
 function getTopicList(tab) {
@@ -106,6 +97,37 @@ function getUserInfo(loginname) {
   }
 }
 
+function getUserCollection(loginname) {
+  return (dispatch) => {
+    get(`/api/topic_collect/${loginname}`)
+      .then((resp) => {
+        dispatch(userCollection(resp.data))
+      })
+  }
+}
+
+function postLogin(accesstoken) {
+  return (dispatch, getState) => {
+    post('/api/user/login', {}, {
+      accessToken: accesstoken,
+    })
+      .then((resp) => {
+        dispatch(login(resp.data))
+      })
+      .then(() => {
+        const { loginname } = getState().user
+        get(`/api/user/${loginname}`)
+          .then((resp) => {
+            dispatch(userInfo(resp.data))
+          })
+        get(`/api/topic_collect/${loginname}`)
+          .then((resp) => {
+            dispatch(userCollection(resp.data))
+          })
+      })
+  }
+}
+
 // eslint-enable
 
 module.exports = {
@@ -116,4 +138,5 @@ module.exports = {
   getTopicDetailAsync,
   postLogin,
   getUserInfo,
+  getUserCollection,
 }
