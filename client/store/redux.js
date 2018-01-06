@@ -7,6 +7,7 @@ const GET_TOPIC_LIST = 'GET_TOPIC_LIST'
 const GET_TOPIC_DETAIL = 'GET_TOPIC_DETAIL'
 const GET_USER_INFO = 'GET_USER_INFO'
 const GET_USER_COLLECTION = 'GET_USER_COLLECTION'
+const LOGIN_MODAL = 'LOGIN_MODAL'
 
 const initialState = {
   count: 1,
@@ -14,6 +15,7 @@ const initialState = {
   detail: {},
   user: {},
   collect: [],
+  loginOpen: false,
 }
 
 function reducer(state = initialState, action) {
@@ -23,6 +25,9 @@ function reducer(state = initialState, action) {
     }
     case LOGIN: {
       return { ...state, user: action.payload }
+    }
+    case LOGIN_MODAL: {
+      return { ...state, loginOpen: action.payload }
     }
     case GET_TOPIC_LIST: {
       return { ...state, list: action.payload }
@@ -50,6 +55,10 @@ function login(loginInfo) {
   return { type: LOGIN, payload: loginInfo }
 }
 
+function loginModal(isOpen) {
+  return { type: LOGIN_MODAL, payload: isOpen }
+}
+
 function topicList(list) { // eslint-disable-line
   return { type: GET_TOPIC_LIST, payload: list }
 }
@@ -65,6 +74,7 @@ function userInfo(userinfo) {
 function userCollection(collect) {
   return { type: GET_USER_COLLECTION, payload: collect }
 }
+
 
 function getTopicList(tab) {
   return (dispatch) => {
@@ -82,7 +92,6 @@ function getTopicDetailAsync(id) {
   return (dispatch) => {
     get(`/api/topic/${id}`)
       .then((resp) => {
-        console.log(resp.data) // eslint-disable-line
         dispatch(getTopicDetail(resp.data))
       })
   }
@@ -153,4 +162,5 @@ module.exports = {
   getUserInfo,
   getUserCollection,
   postComment,
+  loginModal,
 }

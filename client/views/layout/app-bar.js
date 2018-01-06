@@ -16,7 +16,7 @@ import Dialog, {
   DialogTitle,
 } from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
-import { postLogin } from '../../store/redux'
+import { postLogin, loginModal } from '../../store/redux'
 
 const styles = {
   root: {
@@ -52,7 +52,7 @@ class MainAppBar extends React.Component {
   // }
 
   state = {
-    open: false,
+    // open: false,
     token: '',
   }
 
@@ -69,22 +69,16 @@ class MainAppBar extends React.Component {
   }
 
   loginButtonClick = () => {
-    this.setState({
-      open: true,
-    })
+    this.props.loginModal(true)
   }
 
   closeModal = () => {
-    this.setState({
-      open: false
-    })
+    this.props.loginModal(false)
   }
 
   register = () => {
     this.props.postLogin(this.state.token)
-    this.setState({
-      open: false,
-    })
+    this.props.loginModal(false)
   }
 
   handleChange = name => event => {
@@ -131,7 +125,7 @@ class MainAppBar extends React.Component {
           </Toolbar>
         </AppBar>
         <Dialog
-          open={this.state.open}
+          open={this.props.loginOpen}
           onClose={this.closeModal}
           aria-labelledby="form-dialog-title"
           classes={{ paperWidthSm: classes.dialog }}
@@ -170,13 +164,16 @@ class MainAppBar extends React.Component {
 MainAppBar.propTypes = {
   user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  postLogin: PropTypes.func.isRequired,
+  loginModal: PropTypes.func.isRequired,
+  loginOpen: PropTypes.bool.isRequired,
 }
 
 /* eslint-disable */
 export default withRouter(withStyles(styles)(
   connect(
     state => state,
-    { postLogin },
+    { postLogin, loginModal },
   )(MainAppBar),
 ))
 /* eslint-enable */

@@ -36,6 +36,7 @@ if (isDev) {
       path.join(__dirname, '../client/index.js')
     ]
   }
+  config.devtool = 'cheap-module-eval-source-map'
   config.devServer = {
     host: '0.0.0.0',
     // compress: true,  // wtf

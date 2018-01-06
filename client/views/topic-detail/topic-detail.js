@@ -12,7 +12,7 @@ import List, {
 } from 'material-ui/List'
 import Button from 'material-ui/Button'
 import Avatar from 'material-ui/Avatar'
-import { getTopicDetailAsync, postComment } from '../../store/redux'
+import { getTopicDetailAsync, postComment, loginModal } from '../../store/redux'
 import styles from './styles'
 
 /* eslint-disable */
@@ -38,6 +38,10 @@ class TopicDetail extends React.Component {
       return
     }
     this.props.postComment(this.props.detail.id, this.state.textValue)
+  }
+
+  handleLogin = () => {
+    this.props.loginModal(true)
   }
 
   render() {
@@ -89,7 +93,7 @@ class TopicDetail extends React.Component {
                   ) :
                   (
                     <section className={classes.needLogin}>
-                      <Button className="loginButton" raised color="accent">登录并回复</Button>
+                      <Button onClick={this.handleLogin} className="loginButton" raised color="accent">登录并回复</Button>
                     </section>
                   )
               }
@@ -132,6 +136,7 @@ TopicDetail.propTypes = {
   match: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
   postComment: PropTypes.func.isRequired,
+  loginModal: PropTypes.func.isRequired,
   // getTopicDetail: PropTypes.func.isRequired,
 }
 
@@ -140,7 +145,7 @@ TopicDetail.propTypes = {
 export default withStyles(styles)(
   connect(
     state => state,
-    { getTopicDetailAsync, postComment }
+    { getTopicDetailAsync, postComment, loginModal }
   )(TopicDetail)
 )
 /* eslint-enable */
