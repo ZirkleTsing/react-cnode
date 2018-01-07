@@ -12,7 +12,7 @@ const serverRender = require('../util/server-render').serverRender
 // 4.拼接;send
 
 const getTemplate = () => new Promise((resolve, reject) => {
-  axios.get('http://localhost:8888/public/index.server.html')
+  axios.get('http://localhost:8888/public/index.server.ejs')
     .then((res) => {
       resolve(res.data)
     })

@@ -35,6 +35,7 @@ app.use('/api', require('./proxy')) // next 不执行 就截断了请求 不往�
 app.use(favicon(path.join(path.join(__dirname, '../favicon.ico'))))
 
 if (!isDev) {
+  console.log('=====production mode=====')
   app.use('/public', express.static(path.join(__dirname, '../dist')))
 
   app.get('*', (req, res) => {
@@ -43,6 +44,7 @@ if (!isDev) {
     serverRender(serverEntry, template, req, res)
   })
 } else {
+  console.log('=====development mode=====')
   serverDevRender(app)
 }
 

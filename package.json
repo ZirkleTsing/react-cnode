@@ -6,7 +6,7 @@
   "scripts": {
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.config.client.js",
     "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.config.server.js",
-    "build": "npm run clear && npm run build:client && npm run build:server && npm run deploy",
+    "build": "npm run clear && npm run build:client && npm run build:server",
     "clear": "rimraf dist",
     "clear:dp": "rimraf node_modules",
     "deploy": "node deploy/upload.js",
