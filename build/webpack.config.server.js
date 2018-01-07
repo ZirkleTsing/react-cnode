@@ -12,7 +12,7 @@ const config = merge(baseConfig, {
   output: {
     filename: 'server-entry.js',
     libraryTarget: 'commonjs2',
-    publicPath: `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}`
+    publicPath: `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
   },
   plugins: [
     new webpack.DefinePlugin({
