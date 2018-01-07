@@ -39,7 +39,7 @@ if (!isDev) {
 
   app.get('*', (req, res) => {
     const serverEntry = require('../dist/server-entry').ServerSideRender
-    let template = fs.readFileSync(path.join(__dirname, '../dist/index.server.html'), 'utf-8')
+    let template = fs.readFileSync(path.join(__dirname, '../dist/index.server.ejs'), 'utf-8')
     serverRender(serverEntry, template, req, res)
   })
 } else {

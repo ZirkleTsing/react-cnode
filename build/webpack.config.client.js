@@ -4,6 +4,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.config.base')
 const NamedAllModulesPlugin = require('name-all-modules-plugin')
+const OssConfig = require('./deploy.config').OssConfig
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -77,6 +78,7 @@ if (isDev) {
     ]
   }
   config.output.filename = '[name].[chunkhash].js'
+  config.output.publicPath = `${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}`
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin(), // 压缩js代码
     new webpack.optimize.CommonsChunkPlugin({
