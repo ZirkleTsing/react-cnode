@@ -74,7 +74,9 @@ if (isDev) {
       'redux-thunk',
       'axios',
       'marked',
-      'dateformat'
+      'dateformat',
+      'material-ui',
+      'material-ui-icons'
     ]
   }
   config.output.filename = '[name].[chunkhash].js'
