@@ -14,6 +14,7 @@ const config = merge(baseConfig, {
     libraryTarget: 'commonjs2',
     publicPath: `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
   },
+  devtool: 'cheap-module-source-map',
   plugins: [
     new webpack.DefinePlugin({
       'process.env.API_BASE': '"http://127.0.0.1:3333"'

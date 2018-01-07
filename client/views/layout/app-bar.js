@@ -101,7 +101,12 @@ class MainAppBar extends React.Component {
             <Typography type="title" color="inherit" className={classes.flex}>
               CNode
             </Typography>
-            <Button raised color="accent" onClick={this.createButtonClick} className={classes.buttonMargin}>
+            <Button
+              raised
+              color="accent"
+              onClick={this.createButtonClick}
+              className={classes.buttonMargin}
+            >
               新建话题
             </Button>
             {

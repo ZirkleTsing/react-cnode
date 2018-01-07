@@ -79,6 +79,7 @@ if (isDev) {
       'material-ui-icons'
     ]
   }
+  config.devtool = 'cheap-module-source-map'
   config.output.filename = '[name].[chunkhash].js'
   config.output.publicPath = `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
   config.plugins.push(
@@ -96,7 +97,7 @@ if (isDev) {
     //   'process.env': {
     //     NODE_ENV: JSON.stringify('production')
     //   }
-    // })
+    // }),
     new webpack.NamedChunksPlugin((chunk) => { // avoid anonymous chunks
       if (chunk.name) {
         return chunk.name
