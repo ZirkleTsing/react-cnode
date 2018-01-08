@@ -20,6 +20,8 @@ const store = createStore(reducer, preloadedState, compose(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //eslint-disable-line
 ))
 
+console.log('the current state is: ', store.getState()) // eslint-disable-line
+
 // Create a theme instance.
 const theme = createMuiTheme({
   palette: {

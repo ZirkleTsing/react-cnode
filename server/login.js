@@ -11,11 +11,13 @@ router.post('/login', (req, res, next) => {
   })
     .then(resp => {
       if (resp.status === 200 && resp.data.success) {
+        // 存储session信息
         req.session.user = {
-          loginName: resp.data.loginname,
-          avatarUrl: resp.data.avatar_url,
-          id: resp.data.id,
-          accessToken: req.body.accessToken
+          success: true,
+          loginname: resp.data.loginname,
+          avatar_url: resp.data.avatar_url,
+          id: resp.data.id
+          // accessToken: req.body.accessToken
         }
         res.json({
           success: true,

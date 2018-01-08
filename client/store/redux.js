@@ -1,7 +1,6 @@
 // import { get } from '../util/http' // eslint-disable-line
 const { get, post } = require('../util/http')
 
-const ADD = 'ADD'
 const LOGIN = 'LOGIN'
 const GET_TOPIC_LIST = 'GET_TOPIC_LIST'
 const GET_TOPIC_DETAIL = 'GET_TOPIC_DETAIL'
@@ -20,9 +19,6 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case ADD: {
-      return { ...state, count: state.count + 1 }
-    }
     case LOGIN: {
       return { ...state, user: action.payload }
     }
@@ -45,10 +41,6 @@ function reducer(state = initialState, action) {
       return state
     }
   }
-}
-
-function add() {
-  return { type: ADD }
 }
 
 function login(loginInfo) {
@@ -153,7 +145,7 @@ function postComment(topicId, content) {
 // eslint-enable
 
 module.exports = {
-  add,
+  login,
   getTopicList,
   reducer,
   getTopicDetail,

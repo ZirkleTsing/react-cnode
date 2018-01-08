@@ -11,9 +11,10 @@ const createMuiTheme = require('material-ui/styles').createMuiTheme
 const createGenerateClassName = require('material-ui/styles/createGenerateClassName').default
 const color = require('material-ui/colors')
 const reducer = require('../../client/store/redux').reducer
-const add = require('../../client/store/redux').add
+const login = require('../../client/store/redux').login
 
 function serverRender (bundle, template, req, res) {
+  // console.log('session:', req.session)
   const path = req.path
   const serverContext = {}
   const headTags = [] // usage: https://github.com/tizmagik/react-head
@@ -31,7 +32,12 @@ function serverRender (bundle, template, req, res) {
   const store = createStore(reducer, applyMiddleware(thunk))
   // console.log('store:', store.getState())
   // const HtmlTemplate = template // template
-  store.dispatch(add())
+  if (req.session.user) {
+    console.log('session存有user信息:', req.session.user)
+    store.dispatch(login(req.session.user))
+  } else {
+    console.log('session中没有user信息')
+  }
   // console.log('after dispatch:', store.getState())
   const ssrApp = bundle(path, serverContext, store, headTags, sheetsRegistry, jss, theme)
   // 这里进行异步state操作
