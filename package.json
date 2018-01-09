@@ -68,6 +68,7 @@
     "prop-types": "^15.6.0",
     "query-string": "5.0.1",
     "react": "16.2.0",
+    "react-async-bootstrapper": "1.1.2",
     "react-dom": "16.2.0",
     "react-head": "1.2.0",
     "react-jss": "8.1.0",
