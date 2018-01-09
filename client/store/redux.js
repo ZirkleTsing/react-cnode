@@ -78,7 +78,6 @@ function changeTopicIndex(tab) {
 function getTopicList(tab) {
   return (dispatch) => {
     return new Promise((resolve, reject) => {
-      console.log('tab:', tab) // eslint-disable-line
       get('/api/topics', {
         mdrender: false,
         tab,
