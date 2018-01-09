@@ -2,7 +2,7 @@ const path = require('path')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
 const baseConfig = require('./webpack.config.base')
-const OssConfig = require('./deploy.config').OssConfig
+// const OssConfig = require('./deploy.config').OssConfig
 
 const config = merge(baseConfig, {
   target: 'node',
@@ -11,8 +11,8 @@ const config = merge(baseConfig, {
   },
   output: {
     filename: 'server-entry.js',
-    libraryTarget: 'commonjs2',
-    publicPath: `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
+    libraryTarget: 'commonjs2'
+    // publicPath: `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
   },
   devtool: 'cheap-module-source-map',
   plugins: [

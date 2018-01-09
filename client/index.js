@@ -30,7 +30,7 @@ const theme = createMuiTheme({
 });
 
 const render = (Component) => {
-  ReactDOM.hydrate(
+  ReactDOM.render(
     <AppContainer>
       <Provider store={store}>
         <BrowserRouter>

@@ -12,6 +12,12 @@ router.post('/login', (req, res, next) => {
     .then(resp => {
       if (resp.status === 200 && resp.data.success) {
         // 存储session信息
+        // The middleware will automatically add a Set-Cookie header to the response
+        // if the contents of req.session were altered.
+        // Note that no Set-Cookie header will be in the response
+        // (and thus no session created for a specific user) unless there are contents in the session,
+        // so be sure to add something to req.
+        // session as soon as you have identifying information to store for the session.
         req.session.user = {
           success: true,
           loginname: resp.data.loginname,
