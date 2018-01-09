@@ -9,7 +9,7 @@ import User from '../views/user/user'
 export default class MyRoute extends React.Component {
   render() {
     return [
-      <Route path="/" exact render={() => <Redirect to="/dashboard" />} key="root" />,
+      <Route path="/" exact render={() => <Redirect to="/dashboard?tab=all" />} key="root" />,
       <Route path="/dashboard" exact component={TopicTabs} key="dashboard" />,
       <Route path="/topic/:id" exact component={TopicDetail} key="detail" />,
       <Route path="/user/info" exact component={User} key="user" />,

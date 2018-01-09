@@ -1,9 +1,13 @@
 import React from 'react'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
+import queryString from 'query-string'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import TopicList from '../topic-list/index'
 import { tabs } from '../../util/utils'
+import { changeTopicIndex } from '../../store/redux'
+
 
 const TabContainer = ({ children }) => (
   <Typography>
@@ -12,23 +16,44 @@ const TabContainer = ({ children }) => (
 )
 
 class TopicTabs extends React.Component {
-  state = {
-    tabIndex: 'all',
-    // open: true,
+  // state = {
+  //   tabIndex: 'all',
+  //   // open: true,
+  // }
+
+  componentWillMount() {
+    // const { history } = this.props
+    // const { search, pathname } = this.props.location
+    // const { history } = this.props
+    // console.log(this.props.location) // eslint-disable-line
+    // console.log(`pathname:${pathname}, search:${search}`) // eslint-disable-line
+    // if (pathname === '/dashboard' && search === '') {
+    //   console.log('需要在服务端 redirect，在客户端看不到此条信息') // eslint-disable-line
+    //   history.push(`${pathname}?tab=all`)
+    // }
+    if (typeof window !== 'undefined') {
+      const { search } = this.props.location
+      const query = queryString.parse(search)
+      console.log(query) // eslint-disable-line
+      // this.setState({
+      //   tabIndex: query.tab,
+      // })
+      this.props.changeTopicIndex(query.tab)
+    }
   }
 
   componentDidMount() {
-    const { history } = this.props
-    history.push('dashboard?tab=all')
+
   }
 
   onTopicIndexChange = (event, value) => {
     const { history } = this.props
     // console.log(value) // eslint-disable-line
     history.push(`dashboard?tab=${value}`)
-    this.setState({
-      tabIndex: value,
-    })
+    // this.setState({
+    //   tabIndex: value,
+    // })
+    this.props.changeTopicIndex(value)
   }
 
   render() {
@@ -37,7 +62,7 @@ class TopicTabs extends React.Component {
     return (
       <div>
         <Tabs
-          value={this.state.tabIndex}
+          value={this.props.topicIndex}
           onChange={this.onTopicIndexChange}
           fullWidth
           indicatorColor="primary"
@@ -49,7 +74,7 @@ class TopicTabs extends React.Component {
             ))
           }
         </Tabs>
-        <TopicList />
+        <TopicList tab={this.props.topicIndex} />
       </div>
     )
   }
@@ -65,7 +90,12 @@ TabContainer.propTypes = {
 
 TopicTabs.propTypes = {
   history: PropTypes.object.isRequired,
-  // location: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  topicIndex: PropTypes.string.isRequired,
+  changeTopicIndex: PropTypes.func.isRequired,
 }
 
-export default TopicTabs
+export default connect(
+  state => state,
+  { changeTopicIndex },
+)(TopicTabs)

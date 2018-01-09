@@ -8,32 +8,31 @@ import TopicListItem from './list-item'
 import { getTopicList, getTopicDetail } from '../../store/redux'
 /* eslint-disable */
 class TopicList extends React.Component {
-  // state = {
-  //   topic: {
-  //     tab: '置顶',
-  //     title: '2017，我们来聊聊 Node.js',
-  //     comment_count: '23',
-  //     read_count: '215',
-  //     author: 'heisenberg',
-  //   }
-  // }
+  asyncBootstrap = () => {
+    return new Promise((resolve, reject) => {
+      const { search } = this.props.location
+      console.log('search:', search)
+      const query = queryString.parse(search).tab || {tab: 'all'}
+      console.log('query:', query)
+      this.props.getTopicList(query ? query  : 'all')
+        .then(() => {
+          resolve(true)
+        })
+    })
+  }
 
   componentWillReceiveProps(nextProps) {
     const { search } = this.props.location
     if (search !== nextProps.location.search) {
-      const query = queryString.parse(location.search) || {tab: 'all'}
-      this.props.getTopicList(query.tab ? query.tab : 'all')
+      const query = queryString.parse(location.search).tab || {tab: 'all'}
+      this.props.getTopicList(query ? query : 'all')
     }
   }
-  // componentWillMount() {
-  //   // console.log('生命周期')
-  //   this.props.getTopicList()
-  // }
 
   componentDidMount() {
-    const { location } = this.props
-    const query = queryString.parse(location.search) || {tab: 'all'}
-    this.props.getTopicList(query.tab)
+    if (!this.props.list.length) {
+      this.props.getTopicList(this.props.tab)
+    }
   }
 
   onClickListItem = (ele) => () => {
@@ -67,6 +66,7 @@ TopicList.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   getTopicDetail: PropTypes.func.isRequired,
+  tab: PropTypes.string.isRequired,
 }
 
 export default withRouter(

@@ -7,14 +7,15 @@ const GET_TOPIC_DETAIL = 'GET_TOPIC_DETAIL'
 const GET_USER_INFO = 'GET_USER_INFO'
 const GET_USER_COLLECTION = 'GET_USER_COLLECTION'
 const LOGIN_MODAL = 'LOGIN_MODAL'
+const TOPIC_INDEX = 'TOPIC_INDEX'
 
 const initialState = {
-  count: 1,
   list: [],
   detail: {},
   user: {},
   collect: [],
   loginOpen: false,
+  topicIndex: 'all',
 }
 
 function reducer(state = initialState, action) {
@@ -37,6 +38,9 @@ function reducer(state = initialState, action) {
     case GET_USER_COLLECTION: {
       return { ...state, collect: action.payload }
     }
+    case TOPIC_INDEX: {
+      return { ...state, topicIndex: action.payload }
+    }
     default: {
       return state
     }
@@ -51,7 +55,7 @@ function loginModal(isOpen) {
   return { type: LOGIN_MODAL, payload: isOpen }
 }
 
-function topicList(list) { // eslint-disable-line
+function topicList(list) {
   return { type: GET_TOPIC_LIST, payload: list }
 }
 
@@ -67,16 +71,25 @@ function userCollection(collect) {
   return { type: GET_USER_COLLECTION, payload: collect }
 }
 
+function changeTopicIndex(tab) {
+  return { type: TOPIC_INDEX, payload: tab }
+}
 
 function getTopicList(tab) {
   return (dispatch) => {
-    get('/api/topics', {
-      mdrender: false,
-      tab,
-    })
-      .then((resp) => {
-        dispatch(topicList(resp.data))
+    return new Promise((resolve, reject) => {
+      console.log('tab:', tab) // eslint-disable-line
+      get('/api/topics', {
+        mdrender: false,
+        tab,
       })
+        .then((resp) => {
+          // console.log(resp.data) // eslint-disable-line
+          dispatch(topicList(resp.data))
+          dispatch(changeTopicIndex(tab))
+          resolve(resp.data)
+        }).catch(reject)
+    })
   }
 }
 // eslint-disabled
@@ -155,4 +168,5 @@ module.exports = {
   getUserCollection,
   postComment,
   loginModal,
+  changeTopicIndex,
 }
