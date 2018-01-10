@@ -11,9 +11,7 @@ class TopicList extends React.Component {
   asyncBootstrap = () => {
     return new Promise((resolve, reject) => {
       const { search } = this.props.location
-      console.log('search:', search)
-      const query = queryString.parse(search).tab || {tab: 'all'}
-      console.log('query:', query)
+      const query = queryString.parse(search).tab || 'all'
       this.props.getTopicList(query ? query  : 'all')
         .then(() => {
           resolve(true)
@@ -24,7 +22,7 @@ class TopicList extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { search } = this.props.location
     if (search !== nextProps.location.search) {
-      const query = queryString.parse(location.search).tab || {tab: 'all'}
+      const query = queryString.parse(nextProps.location.search).tab || 'all'
       this.props.getTopicList(query ? query : 'all')
     }
   }
