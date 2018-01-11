@@ -16,7 +16,7 @@
       "repo": "git@github.com:chang-yuyu-group/react-cnode.git",
       "ref": "origin/master",
       "path": "/home/workplace/react-cnode",
-      "post-deploy": "cnpm install && npm run build && npm run deploy && pm2 startOrRestart ecosystem.json --env production"
+      "post-deploy": "rm -rf shared && rm -rf source && cnpm install && npm run build && npm run deploy && pm2 startOrRestart ecosystem.json --env production"
     }
   }
 }
