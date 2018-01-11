@@ -12,7 +12,7 @@
   "deploy": {
     "production": {
       "user": "root",
-      "host": "jokcy.me",
+      "host": "39.107.86.47",
       "repo": "git@github.com:chang-yuyu-group/react-cnode.git",
       "ref": "origin/master",
       "path": "/home/workplace",
