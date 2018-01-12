@@ -6,9 +6,15 @@ const OSSConfig = require('../build/deploy.config').OssConfig
 const client = new OSS(OSSConfig)
 
 const files = fs.readdirSync(path.join(__dirname, '../dist'))
-console.log('dist 目录下的文件列表:', files)
+const filesToUpload = files.filter(file => {
+  if (OSSConfig.exclude.indexOf(file) === -1) {
+    return true
+  }
+  return false
+})
+console.log('dist 目录下的文件列表:', filesToUpload)
 
-files.map(file => {
+filesToUpload.map(file => {
   client.put(path.join(OSSConfig.bucket, file), path.join(__dirname, '../dist', file))
     .then(result => {
       console.log('upload success:', result.name)

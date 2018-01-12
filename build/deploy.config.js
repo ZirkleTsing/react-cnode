@@ -4,6 +4,7 @@ module.exports = {
     accessKeyId: 'LTAIwYS5LULykLSx',
     accessKeySecret: 'xRZpNQLbXMnugd3jxzWpcKr4gluecr',
     bucket: 'cnode',
-    prefix: 'aliyuncs.com'
+    prefix: 'aliyuncs.com',
+    exclude: ['server-entry.js', 'server-entry.js.map']
   }
 }
