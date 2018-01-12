@@ -81,7 +81,7 @@ if (isDev) {
   }
   config.devtool = 'cheap-module-source-map'
   config.output.filename = '[name].[chunkhash].js'
-  // config.output.publicPath = `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
+  config.output.publicPath = `http://${OssConfig.bucket}.${OssConfig.region}.${OssConfig.prefix}/${OssConfig.bucket}/`
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin(), // 压缩js代码
     new webpack.optimize.CommonsChunkPlugin({
