@@ -132,6 +132,9 @@ const styles = (theme) => {
           // left: '50%',
           // transform: 'translateY(-50%)',
         },
+        '& pre': {
+          overflow: 'auto',
+        },
         '& a': {
           color: '#08c',
           textDecoration: 'none',
